@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
-
-const WA_NUMBER = '919594345743';
-const WA_MESSAGE = encodeURIComponent('Hi, I would like to enquire about admission at Siddhi Coaching Classes.');
+import { siteInfo } from '../../data/siteInfo';
 
 export default function WhatsAppButton() {
+  const href = `https://wa.me/${siteInfo.whatsapp}?text=${encodeURIComponent(siteInfo.whatsappMessage)}`;
+
   return (
     <motion.a
-      href={`https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-lg"

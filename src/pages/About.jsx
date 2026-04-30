@@ -4,14 +4,14 @@ import SectionHeader from '../components/ui/SectionHeader';
 import DemoButton from '../components/ui/DemoButton';
 
 const milestones = [
-  { year: 2006, event: 'Siddhi Coaching Classes founded by Vinod Sir in Chembur.' },
-  { year: 2008, event: 'First batch of SSC students — 45 students, 94% pass rate.' },
-  { year: 2012, event: 'Expanded to CBSE and ICSE coaching. 500 students milestone reached.' },
-  { year: 2015, event: 'Introduced Commerce stream coaching. New center inaugurated.' },
-  { year: 2018, event: 'Launched JEE Foundation and NEET Foundation batches. 1000 students enrolled.' },
+  { year: 2003, event: "Siddhi's Coaching Classes founded by Vinod Sir in Chembur." },
+  { year: 2006, event: 'First batch of SSC students — strong results, word-of-mouth growth begins.' },
+  { year: 2010, event: 'Expanded to HSC Science and Commerce coaching. 500 students milestone reached.' },
+  { year: 2015, event: 'Second centre opened on Shell Colony Road, near Adarsha Vidyalaya.' },
+  { year: 2018, event: 'Launched MH-CET, JEE, and NEET coaching. Entrance exam specialisation begins.' },
   { year: 2020, event: 'Transitioned to online classes during COVID-19. Zero disruption in education.' },
   { year: 2022, event: 'Upgraded infrastructure — smart classrooms, digital boards, CCTV security.' },
-  { year: 2024, event: '1500+ students. 50+ faculty. 18 consecutive years of Board toppers.' },
+  { year: 2024, event: "22+ years of excellence. 13 out of 60 SSC students scored 90%+. Chembur's most trusted coaching institute." },
 ];
 
 const values = [
@@ -28,7 +28,7 @@ export default function About() {
     <>
       <Helmet>
         <title>About Us | Siddhi Coaching Classes Chembur — Our Story & Mission</title>
-        <meta name="description" content="Learn the story of Siddhi Coaching Classes — founded in 2006 in Chembur, Mumbai, with a mission to provide quality education with personal attention." />
+        <meta name="description" content="Learn the story of Siddhi's Coaching Classes — founded in 2003 in Chembur, Mumbai, with a mission to provide quality education with personal attention." />
       </Helmet>
 
       {/* Hero */}
@@ -84,10 +84,10 @@ export default function About() {
                   Born and raised in Chembur, Vinod Sir spent his early career as a Mathematics teacher at a local municipal school. What he saw every day broke his heart — bright children with tremendous potential, struggling not because they lacked intelligence, but because they lacked access to focused, quality guidance.
                 </p>
                 <p>
-                  In 2006, with a small borrowed space, a blackboard, and a batch of 12 students, he started Siddhi Coaching Classes. The name "Siddhi" — meaning achievement in Sanskrit — was not chosen lightly. It captured his belief that every child, with the right support, could achieve their true potential.
+                  In 2003, with a small borrowed space, a blackboard, and a batch of 12 students, he started Siddhi's Coaching Classes. The name "Siddhi" — meaning achievement in Sanskrit — was not chosen lightly. It captured his belief that every child, with the right support, could achieve their true potential.
                 </p>
                 <p>
-                  Today, 18 years later, Siddhi stands as Chembur's most trusted name in coaching. But the mission remains unchanged: personal attention, academic excellence, and a genuine investment in every student's future.
+                  Today, 22+ years later, Siddhi's stands as Chembur's most trusted name in coaching. But the mission remains unchanged: personal attention, academic excellence, and a genuine investment in every student's future.
                 </p>
               </div>
               <div className="mt-8">

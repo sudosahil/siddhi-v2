@@ -17,7 +17,7 @@ export default function DemoButton({ className = '', size = 'md' }) {
         to="/admissions"
         className={`inline-block bg-saffron text-white font-heading font-semibold rounded-full shadow-md hover:bg-amber-600 transition-colors duration-200 ${sizeClasses} ${className}`}
       >
-        Book Free Demo Class
+        Book Free Demo Lecture
       </Link>
     </motion.div>
   );

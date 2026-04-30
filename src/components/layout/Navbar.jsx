@@ -35,7 +35,7 @@ export default function Navbar() {
             <span className="text-white font-heading font-bold text-lg">S</span>
           </div>
           <div className="leading-tight">
-            <div className={`font-heading font-bold text-sm md:text-base ${scrolled ? 'text-navy' : 'text-white'}`}>Siddhi Coaching</div>
+            <div className={`font-heading font-bold text-sm md:text-base ${scrolled ? 'text-navy' : 'text-white'}`}>Siddhi's Coaching</div>
             <div className={`text-xs ${scrolled ? 'text-gray-500' : 'text-white/70'}`}>Chembur, Mumbai</div>
           </div>
         </Link>

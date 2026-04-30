@@ -5,11 +5,11 @@ import { X, Clock, Users, BookOpen, MessageCircle } from 'lucide-react';
 import SectionHeader from '../components/ui/SectionHeader';
 import { courses } from '../data/courses';
 
-const filters = ['All', 'SSC', 'CBSE', 'ICSE', 'Commerce', 'Competitive'];
+const filters = ['All', 'School', 'Science', 'Commerce', 'Entrance'];
 
 const WA_NUMBER = '919594345743';
 function enquireWA(courseName) {
-  const msg = encodeURIComponent(`Hi, I would like to enquire about the ${courseName} course at Siddhi Coaching Classes.`);
+  const msg = encodeURIComponent(`Hi, I would like to enquire about the ${courseName} course at Siddhi's Coaching Classes.`);
   window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
 }
 
@@ -17,18 +17,13 @@ export default function Courses() {
   const [active, setActive] = useState('All');
   const [selected, setSelected] = useState(null);
 
-  const filtered = courses.filter(c => {
-    if (active === 'All') return true;
-    if (active === 'Competitive') return c.board === 'Competitive';
-    if (active === 'Commerce') return c.name.toLowerCase().includes('commerce');
-    return c.board === active;
-  });
+  const filtered = courses.filter(c => active === 'All' || c.section === active);
 
   return (
     <>
       <Helmet>
-        <title>Coaching Courses in Chembur | SSC CBSE ICSE JEE NEET Classes — Siddhi Coaching</title>
-        <meta name="description" content="Explore coaching programs at Siddhi Coaching Classes Chembur — SSC, CBSE, ICSE (8th–12th), Commerce, JEE Foundation, and NEET Foundation." />
+        <title>Coaching Courses in Chembur | SSC HSC JEE NEET MH-CET Classes — Siddhi's Coaching Classes</title>
+        <meta name="description" content="Explore coaching programs at Siddhi's Coaching Classes Chembur — SSC Board, HSC Science & Commerce, MH-CET, JEE, NEET, CA Foundation." />
       </Helmet>
 
       {/* Hero */}
@@ -80,11 +75,11 @@ export default function Courses() {
                   exit={{ opacity: 0, scale: 0.95 }}
                   className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:-translate-y-1 hover:shadow-md transition-all duration-200"
                 >
-                  <div className="h-2" style={{ backgroundColor: c.color }} />
+                  <div className="h-2 bg-navy" />
                   <div className="p-6">
                     <div className="flex items-start justify-between mb-3">
                       <div>
-                        <h3 className="font-heading font-semibold text-navy text-lg">{c.name}</h3>
+                        <h3 className="font-heading font-semibold text-navy text-lg">{c.title}</h3>
                         <p className="text-saffron text-sm font-medium">Classes {c.classes}</p>
                       </div>
                       <span className="text-xs bg-gray-100 text-gray-500 rounded-lg px-2 py-1 mt-1">{c.board}</span>
@@ -108,7 +103,7 @@ export default function Courses() {
                       </div>
                       <div className="flex items-center gap-2 text-gray-900 text-sm font-semibold">
                         <BookOpen size={14} className="text-saffron" />
-                        {c.feeRange}
+                        {c.highlight}
                       </div>
                     </div>
 
@@ -120,7 +115,7 @@ export default function Courses() {
                         View Details
                       </button>
                       <button
-                        onClick={() => enquireWA(c.name)}
+                        onClick={() => enquireWA(c.title)}
                         className="flex-1 bg-[#25D366] text-white font-semibold text-sm py-2 rounded-xl flex items-center justify-center gap-1 hover:bg-green-600 transition-colors"
                       >
                         <MessageCircle size={14} /> Enquire
@@ -151,11 +146,11 @@ export default function Courses() {
               exit={{ scale: 0.9, y: 20 }}
               onClick={e => e.stopPropagation()}
             >
-              <div className="h-2 rounded-t-2xl" style={{ backgroundColor: selected.color }} />
+              <div className="h-2 rounded-t-2xl bg-navy" />
               <div className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div>
-                    <h2 className="font-heading font-bold text-navy text-2xl">{selected.name}</h2>
+                    <h2 className="font-heading font-bold text-navy text-2xl">{selected.title}</h2>
                     <p className="text-saffron font-medium">Classes {selected.classes} | {selected.board}</p>
                   </div>
                   <button onClick={() => setSelected(null)} className="p-2 hover:bg-gray-100 rounded-lg">
@@ -172,38 +167,25 @@ export default function Courses() {
                   </div>
                 </div>
 
-                <div className="mb-5">
-                  <h4 className="font-heading font-semibold text-navy mb-2">Syllabus Highlights</h4>
-                  <ul className="space-y-1.5">
-                    {selected.syllabusHighlights.map((h, i) => (
-                      <li key={i} className="flex gap-2 text-sm text-gray-600">
-                        <span className="text-emerald font-bold mt-0.5">✓</span>
-                        {h}
-                      </li>
-                    ))}
-                  </ul>
+                <div className="flex items-center gap-3 bg-saffron/10 rounded-xl px-4 py-3 mb-5">
+                  <BookOpen size={16} className="text-saffron shrink-0" />
+                  <span className="text-sm font-semibold text-navy">{selected.highlight}</span>
                 </div>
 
-                <div className="mb-5">
-                  <h4 className="font-heading font-semibold text-navy mb-2">Batch Timings</h4>
-                  <div className="space-y-2">
-                    {selected.batchTimings.map((b, i) => (
-                      <div key={i} className="flex items-center justify-between bg-gray-50 rounded-xl px-4 py-2.5">
-                        <span className="text-sm font-medium text-navy">{b.label}</span>
-                        <span className="text-sm text-gray-500">{b.time}</span>
-                      </div>
-                    ))}
+                <div className="space-y-2 mb-5">
+                  <div className="flex items-center gap-2 text-gray-600 text-sm">
+                    <Clock size={14} className="text-saffron" />
+                    {selected.batchType}
                   </div>
-                </div>
-
-                <div className="flex items-center justify-between bg-saffron/10 rounded-xl px-4 py-3 mb-5">
-                  <span className="text-sm text-gray-700">Monthly Fee Range</span>
-                  <span className="font-bold text-saffron text-base">{selected.feeRange}</span>
+                  <div className="flex items-center gap-2 text-gray-600 text-sm">
+                    <Users size={14} className="text-saffron" />
+                    Max 20 students per batch
+                  </div>
                 </div>
 
                 <div className="flex gap-3">
                   <button
-                    onClick={() => { enquireWA(selected.name); setSelected(null); }}
+                    onClick={() => { enquireWA(selected.title); setSelected(null); }}
                     className="flex-1 bg-[#25D366] text-white font-semibold py-3 rounded-xl flex items-center justify-center gap-2 hover:bg-green-600 transition-colors"
                   >
                     <MessageCircle size={16} /> Enquire on WhatsApp

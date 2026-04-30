@@ -3,28 +3,24 @@ import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionHeader from '../components/ui/SectionHeader';
 import AnimatedCounter from '../components/ui/AnimatedCounter';
-import { results } from '../data/results';
+import { results, resultStats } from '../data/results';
 
-const years = [2024, 2023, 2022, 2021];
-const boards = ['All', 'SSC', 'CBSE', 'ICSE'];
+const years = ['2024-25', 'Previous Batch'];
+const categories = ['All', 'SSC', 'Science', 'Commerce', 'Entrance'];
 
 export default function Results() {
-  const [year, setYear] = useState(2024);
-  const [board, setBoard] = useState('All');
+  const [year, setYear] = useState('2024-25');
+  const [category, setCategory] = useState('All');
 
   const filtered = results.filter(r =>
-    r.year === year && (board === 'All' || r.board === board)
+    r.year === year && (category === 'All' || r.category === category)
   );
-
-  const sscAvg = filtered.filter(r => r.board === 'SSC').reduce((acc, r, _, arr) => acc + r.percentage / arr.length, 0);
-  const cbseCount = filtered.filter(r => r.board === 'CBSE' && r.percentage >= 90).length;
-  const icseCount = filtered.filter(r => r.board === 'ICSE' && r.percentage >= 90).length;
 
   return (
     <>
       <Helmet>
-        <title>Toppers & Results | Siddhi Coaching Classes Chembur</title>
-        <meta name="description" content="See the outstanding results achieved by Siddhi Coaching Classes students across SSC, CBSE, and ICSE boards in Chembur, Mumbai." />
+        <title>Toppers & Results | Siddhi's Coaching Classes Chembur</title>
+        <meta name="description" content="See the outstanding results achieved by Siddhi's Coaching Classes students across SSC, HSC Science, HSC Commerce, and Entrance exams in Chembur, Mumbai." />
       </Helmet>
 
       {/* Hero */}
@@ -38,14 +34,14 @@ export default function Results() {
             Our Proud Results
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-white/70 text-lg max-w-2xl mx-auto mb-8">
-            200+ students scored above 90% across boards in 2024 alone.
+            {resultStats.ssc2425.label}
           </motion.p>
           {/* Aggregate stats */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="flex flex-wrap justify-center gap-6">
             {[
-              { val: 200, suf: '+', label: 'Scored 90%+ in 2024' },
-              { val: 98, suf: '%', label: 'SSC Pass Rate' },
-              { val: 16, suf: '', label: 'Consecutive Years of Toppers' },
+              { val: resultStats.ssc2425.above90, suf: `/${resultStats.ssc2425.totalStudents}`, label: 'Scored 90%+ (SSC 2024-25)' },
+              { val: 97, suf: '%', label: 'Highest SSC Score' },
+              { val: 22, suf: '+', label: 'Years of Toppers' },
             ].map((s, i) => (
               <div key={i} className="bg-white/10 border border-white/20 rounded-xl px-6 py-3 text-center">
                 <div className="font-heading font-bold text-white text-2xl">
@@ -79,13 +75,13 @@ export default function Results() {
                 </button>
               ))}
             </div>
-            {/* Board filter */}
+            {/* Category filter */}
             <div className="flex gap-2 flex-wrap">
-              {boards.map(b => (
+              {categories.map(b => (
                 <button
                   key={b}
-                  onClick={() => setBoard(b)}
-                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${board === b ? 'bg-saffron text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200 hover:border-saffron hover:text-saffron'}`}
+                  onClick={() => setCategory(b)}
+                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${category === b ? 'bg-saffron text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200 hover:border-saffron hover:text-saffron'}`}
                 >
                   {b}
                 </button>
@@ -96,7 +92,7 @@ export default function Results() {
           {/* Cards */}
           <AnimatePresence mode="wait">
             <motion.div
-              key={`${year}-${board}`}
+              key={`${year}-${category}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
@@ -110,19 +106,23 @@ export default function Results() {
                   className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 text-center"
                 >
                   <div className="relative inline-block mb-3">
-                    <img src={r.avatar} alt={r.name} className="w-16 h-16 rounded-full object-cover" />
-                    {r.percentage >= 95 && (
+                    <img
+                      src={`https://ui-avatars.com/api/?name=${encodeURIComponent(r.name)}&background=E8951D&color=fff&size=150`}
+                      alt={r.name}
+                      className="w-16 h-16 rounded-full object-cover"
+                    />
+                    {r.highlight && (
                       <span className="absolute -top-1 -right-1 w-5 h-5 bg-saffron rounded-full border-2 border-white" />
                     )}
                   </div>
                   <h3 className="font-heading font-semibold text-navy text-sm">{r.name}</h3>
-                  <div className="text-2xl font-bold text-saffron my-1">{r.percentage}%</div>
-                  <div className="text-xs text-gray-400 mb-1">({r.marks})</div>
-                  <span className={`inline-block text-xs font-semibold px-2 py-0.5 rounded-full mb-2 ${r.board === 'SSC' ? 'bg-navy/10 text-navy' : r.board === 'CBSE' ? 'bg-emerald/10 text-emerald' : 'bg-saffron/10 text-saffron'}`}>
-                    {r.board} Board
+                  <div className="text-2xl font-bold text-saffron my-1">{r.percentage}</div>
+                  <span className={`inline-block text-xs font-semibold px-2 py-0.5 rounded-full mb-2 ${r.category === 'SSC' ? 'bg-navy/10 text-navy' : r.category === 'Science' ? 'bg-emerald/10 text-emerald' : 'bg-saffron/10 text-saffron'}`}>
+                    {r.category}
                   </span>
-                  <p className="text-xs text-gray-500 mb-3">{r.school}</p>
-                  <p className="text-xs text-gray-400 italic">"{r.quote.substring(0, 80)}..."</p>
+                  {r.school && <p className="text-xs text-gray-500 mb-1">{r.school}</p>}
+                  {r.rank && <p className="text-xs text-emerald font-semibold">{r.rank}</p>}
+                  {r.highlight && <p className="text-xs text-saffron font-semibold mt-1">{r.highlight}</p>}
                 </motion.div>
               ))}
             </motion.div>
@@ -136,25 +136,29 @@ export default function Results() {
         </div>
       </section>
 
-      {/* Board-wise stats */}
+      {/* SSC Batch Stats */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <SectionHeader
-            label="Board Statistics"
-            heading={`Performance Summary — ${year}`}
+            label="Batch Statistics"
+            heading="SSC 2024-25 Performance"
           />
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {[
-              { board: 'SSC', color: 'navy', stat: sscAvg > 0 ? `${sscAvg.toFixed(1)}%` : 'N/A', label: 'Average Score' },
-              { board: 'CBSE', color: 'emerald', stat: `${cbseCount}`, label: 'Students scored 90%+' },
-              { board: 'ICSE', color: 'saffron', stat: `${icseCount}`, label: 'Students scored 90%+' },
-            ].map(s => (
-              <div key={s.board} className="bg-cream rounded-2xl p-6 text-center border border-gray-100">
-                <span className={`inline-block text-xs font-semibold px-3 py-1 rounded-full mb-3 bg-${s.color}/10 text-${s.color}`}>{s.board} Board</span>
-                <div className="font-heading font-bold text-3xl text-navy mb-1">{s.stat}</div>
-                <div className="text-gray-500 text-sm">{s.label}</div>
-              </div>
-            ))}
+            <div className="bg-cream rounded-2xl p-6 text-center border border-gray-100">
+              <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full mb-3 bg-navy/10 text-navy">Total Students</span>
+              <div className="font-heading font-bold text-3xl text-navy mb-1">{resultStats.ssc2425.totalStudents}</div>
+              <div className="text-gray-500 text-sm">SSC 2024-25 Batch</div>
+            </div>
+            <div className="bg-cream rounded-2xl p-6 text-center border border-gray-100">
+              <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full mb-3 bg-saffron/10 text-saffron">Scored 90%+</span>
+              <div className="font-heading font-bold text-3xl text-navy mb-1">{resultStats.ssc2425.above90}</div>
+              <div className="text-gray-500 text-sm">Out of {resultStats.ssc2425.totalStudents} students</div>
+            </div>
+            <div className="bg-cream rounded-2xl p-6 text-center border border-gray-100">
+              <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full mb-3 bg-emerald/10 text-emerald">Top Score</span>
+              <div className="font-heading font-bold text-3xl text-navy mb-1">{resultStats.ssc2425.topScore}</div>
+              <div className="text-gray-500 text-sm">Highest in SSC 2024-25</div>
+            </div>
           </div>
         </div>
       </section>

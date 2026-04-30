@@ -1,22 +1,22 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GraduationCap, Users } from 'lucide-react';
+import { GraduationCap } from 'lucide-react';
 import SectionHeader from '../components/ui/SectionHeader';
 import { teachers } from '../data/teachers';
 
-const filters = ['All', 'Maths', 'Science', 'English', 'Commerce', 'SSC'];
+const filters = ['All', 'Science', 'Commerce', 'Entrance', 'Counselling'];
 
 export default function Teachers() {
   const [active, setActive] = useState('All');
 
-  const filtered = teachers.filter(t => active === 'All' || t.filter === active);
+  const filtered = teachers.filter(t => active === 'All' || t.section === active);
 
   return (
     <>
       <Helmet>
-        <title>Our Teachers | Expert Faculty — Siddhi Coaching Classes Chembur</title>
-        <meta name="description" content="Meet the experienced faculty at Siddhi Coaching Classes Chembur. Subject experts with 7–18 years of teaching experience." />
+        <title>Our Teachers | Expert Faculty — Siddhi's Coaching Classes Chembur</title>
+        <meta name="description" content="Meet the experienced faculty at Siddhi's Coaching Classes Chembur. Subject experts including PhD holders, MBBS doctors, CA, CS, and IITians." />
       </Helmet>
 
       {/* Hero */}
@@ -70,7 +70,11 @@ export default function Teachers() {
                   className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm text-center transition-all duration-200"
                 >
                   <div className="relative inline-block mb-4">
-                    <img src={t.avatar} alt={t.name} className="w-20 h-20 rounded-full object-cover" />
+                    <img
+                      src={`https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=1B2A4A&color=fff&size=200`}
+                      alt={t.name}
+                      className="w-20 h-20 rounded-full object-cover"
+                    />
                   </div>
                   <h3 className="font-heading font-semibold text-navy text-base">{t.name}</h3>
                   <p className="text-saffron text-sm font-medium mt-0.5">{t.subject}</p>
@@ -79,14 +83,11 @@ export default function Teachers() {
                     {t.qualification}
                   </div>
 
-                  <div className="flex justify-center gap-2 mt-3">
-                    <span className="text-xs bg-navy/5 text-navy rounded-full px-3 py-1">{t.experience} yrs</span>
-                    <span className="flex items-center gap-1 text-xs bg-emerald/10 text-emerald rounded-full px-3 py-1">
-                      <Users size={10} />{t.students}+
-                    </span>
+                  <div className="flex justify-center mt-3">
+                    <span className="text-xs bg-navy/5 text-navy rounded-full px-3 py-1">{t.experience}</span>
                   </div>
 
-                  <p className="text-gray-400 text-xs italic mt-4 leading-relaxed line-clamp-3">{t.philosophy}</p>
+                  <p className="text-gray-400 text-xs italic mt-4 leading-relaxed line-clamp-3">{t.highlight}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -98,14 +99,14 @@ export default function Teachers() {
       <section className="py-16 bg-white text-center">
         <div className="max-w-2xl mx-auto px-4">
           <h2 className="font-heading font-bold text-2xl text-navy mb-3">Want to Learn From Our Teachers?</h2>
-          <p className="text-gray-600 mb-6">Book a free demo class and experience our teaching firsthand — no commitment required.</p>
+          <p className="text-gray-600 mb-6">Book a free demo lecture and experience our teaching firsthand — no commitment required.</p>
           <a
-            href="https://wa.me/919594345743?text=Hi%2C%20I%20would%20like%20to%20book%20a%20free%20demo%20class."
+            href="https://wa.me/919594345743?text=Hi%2C%20I%20would%20like%20to%20book%20a%20free%20demo%20lecture."
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-saffron text-white font-heading font-semibold px-8 py-3 rounded-full hover:bg-amber-600 transition-colors"
           >
-            Book Free Demo Class
+            Book Free Demo Lecture
           </a>
         </div>
       </section>

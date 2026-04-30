@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, MessageCircle } from 'lucide-react';
 import SectionHeader from '../components/ui/SectionHeader';
+import { siteInfo } from '../data/siteInfo';
 
 const WA_NUMBER = '919594345743';
 
@@ -48,11 +49,11 @@ export default function Contact() {
               <h2 className="font-heading font-bold text-2xl text-navy mb-6">Contact Details</h2>
               <div className="space-y-5 mb-8">
                 {[
-                  { icon: <MapPin size={20} className="text-saffron" />, label: 'Address', content: 'Shop no.5 Veena Serene, B Wing, Sahakar Nagar 4, Shell Colony Road, Chembur, Mumbai - 400071', href: null },
-                  { icon: <Phone size={20} className="text-saffron" />, label: 'Phone (Click to Call)', content: '+91 95943 45743', href: 'tel:+919594345743' },
+                  { icon: <MapPin size={20} className="text-saffron" />, label: 'Centre 1 — Shell Colony', content: siteInfo.centres[0].address, href: null },
+                  { icon: <MapPin size={20} className="text-saffron" />, label: 'Centre 2 — Adarsha Vidyalaya', content: siteInfo.centres[1].address, href: null },
+                  { icon: <Phone size={20} className="text-saffron" />, label: 'Phone (Click to Call)', content: siteInfo.phoneDisplay, href: `tel:${siteInfo.phone1}` },
                   { icon: <MessageCircle size={20} className="text-[#25D366]" />, label: 'WhatsApp', content: '+91 95943 45743', href: `https://wa.me/${WA_NUMBER}` },
-                  { icon: <Mail size={20} className="text-saffron" />, label: 'Email', content: 'info@siddhicoaching.in', href: 'mailto:info@siddhicoaching.in' },
-                  { icon: <Clock size={20} className="text-saffron" />, label: 'Timings', content: 'Monday to Saturday: 6:30 AM – 9:00 PM', href: null },
+                  { icon: <Clock size={20} className="text-saffron" />, label: 'Timings', content: siteInfo.timings, href: null },
                 ].map((item, i) => (
                   <div key={i} className="flex gap-4 bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
                     <div className="w-10 h-10 rounded-xl bg-navy/5 flex items-center justify-center shrink-0">{item.icon}</div>
@@ -73,7 +74,7 @@ export default function Contact() {
               <div className="bg-navy/5 rounded-xl p-4 border border-navy/10">
                 <h3 className="font-heading font-semibold text-navy mb-2">Directions from Chembur Station</h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  Exit Chembur railway station and head towards Shell Colony Road. Veena Serene building is on Shell Colony Road in Sahakar Nagar 4 — look for our signboard at Shop no.5, B Wing. 5-minute walk from both Chembur railway and metro stations.
+                  Exit Chembur railway station and head towards Shell Colony Road. Our main centre (Veena Serene, B Wing) and second centre (near Adarsha Vidyalaya) are both on Shell Colony Road in Sahakar Nagar. 5-minute walk from both Chembur railway and metro stations.
                 </p>
               </div>
             </motion.div>

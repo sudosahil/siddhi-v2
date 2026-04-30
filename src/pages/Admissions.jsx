@@ -263,7 +263,7 @@ export default function Admissions() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <SectionHeader label="FAQs" heading="Frequently Asked Questions" />
           <div className="bg-cream rounded-2xl p-6 border border-gray-100">
-            {faqs.map((f, i) => <FAQItem key={i} q={f.question} a={f.answer} />)}
+            {faqs.map((f, i) => <FAQItem key={i} q={f.q} a={f.a} />)}
           </div>
         </div>
       </section>

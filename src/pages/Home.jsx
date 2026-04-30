@@ -9,34 +9,36 @@ import { courses } from '../data/courses';
 import { teachers } from '../data/teachers';
 import { results } from '../data/results';
 import { testimonials } from '../data/testimonials';
+import { siteInfo } from '../data/siteInfo';
 
 const fadeUp = { hidden: { opacity: 0, y: 40 }, show: { opacity: 1, y: 0 } };
 const stagger = { show: { transition: { staggerChildren: 0.1 } } };
 
 const stats = [
-  { value: 1500, suffix: '+', label: 'Students Taught' },
-  { value: 18, suffix: '+', label: 'Years of Excellence' },
-  { value: 92, suffix: '%', label: 'Pass Rate' },
-  { value: 50, suffix: '+', label: 'Expert Teachers' },
+  { value: 22, suffix: '+', label: 'Years of Excellence' },
+  { value: 9, suffix: '', label: 'Expert Faculty' },
+  { value: 13, suffix: '/60', label: 'Scored 90%+ (SSC 2024-25)' },
+  { value: 97, suffix: '%', label: 'Highest Score' },
+  { value: 2, suffix: '', label: 'Centres in Chembur' },
 ];
 
 const whyUs = [
-  { title: 'Small Batch Sizes', desc: 'Maximum 20 students per batch — every child gets undivided attention from the teacher.' },
-  { title: 'Experienced Faculty', desc: 'Average 10+ years of teaching experience. Our faculty are subject experts, not just educators.' },
-  { title: 'Result-Proven', desc: 'Toppers every year across SSC, CBSE, and ICSE boards. Our track record speaks for itself.' },
-  { title: 'Flexible Batches', desc: 'Morning, afternoon, and evening batches — designed around school schedules.' },
+  { title: 'Qualified Faculty per Subject', desc: 'PhD holders, MBBS doctors, CAs, CS professionals — every subject has a dedicated expert.' },
+  { title: 'Digital Classrooms', desc: 'Interactive Digital Panel classrooms for engaging, technology-aided learning.' },
+  { title: 'Result-Proven', desc: 'Toppers every year across SSC, HSC Science, and HSC Commerce. 13/60 scored 90%+ in SSC 2024-25.' },
+  { title: 'Two Centres', desc: 'Two conveniently located centres on Shell Colony Road, Chembur.' },
 ];
 
 export default function Home() {
-  const topperPreview = results.filter(r => r.year === 2024).slice(0, 5);
+  const topperPreview = results.filter(r => r.year === '2024-25').slice(0, 5);
   const teacherPreview = teachers.slice(0, 3);
   const testimonialPreview = testimonials.slice(0, 3);
 
   return (
     <>
       <Helmet>
-        <title>Siddhi Coaching Classes Chembur | Best SSC CBSE ICSE Tuition in Chembur Mumbai</title>
-        <meta name="description" content="Siddhi Coaching Classes in Chembur, Mumbai — trusted since 2006 for SSC, CBSE, ICSE, JEE, and NEET coaching. Small batches, experienced faculty, proven results." />
+        <title>Siddhi's Coaching Classes Chembur | SSC HSC MH-CET NEET JEE CA Foundation Chembur Mumbai</title>
+        <meta name="description" content="Siddhi's Coaching Classes in Chembur, Mumbai — trusted since 2003 for SSC, HSC Science & Commerce, MH-CET, NEET, JEE, and CA Foundation. Expert faculty, proven results." />
       </Helmet>
 
       {/* Hero */}
@@ -55,14 +57,14 @@ export default function Home() {
             className="max-w-3xl"
           >
             <motion.span variants={fadeUp} className="inline-block bg-saffron/20 text-saffron text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full mb-6">
-              Chembur's Most Trusted Coaching Since 2006
+              Success Begins Here
             </motion.span>
             <motion.h1 variants={fadeUp} className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
-              Your Child's Success <br />
-              <span className="text-saffron">Starts Here.</span>
+              Chembur's Trusted <br />
+              <span className="text-saffron">Coaching Since 2003</span>
             </motion.h1>
             <motion.p variants={fadeUp} className="text-white/75 text-lg md:text-xl leading-relaxed mb-8 max-w-xl">
-              Expert coaching for SSC, CBSE &amp; ICSE boards (Classes 8–12), JEE Foundation, and NEET Foundation. Small batches. Proven results. Personal attention.
+              SSC Board | HSC Science &amp; Commerce | MH-CET | NEET | JEE | CA Foundation
             </motion.p>
             <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
               <DemoButton size="lg" />
@@ -70,7 +72,7 @@ export default function Home() {
                 to="/results"
                 className="inline-block border-2 border-white/40 text-white font-heading font-semibold rounded-full px-8 py-4 text-base hover:border-saffron hover:text-saffron transition-colors duration-200"
               >
-                View Results →
+                View Our Results →
               </Link>
               <a
                 href="/brochure.pdf"
@@ -148,7 +150,7 @@ export default function Home() {
                 variants={fadeUp}
                 className="bg-cream rounded-2xl p-6 border border-gray-100 shadow-sm hover:-translate-y-1 hover:shadow-md transition-all duration-200 group"
               >
-                <h3 className="font-heading font-semibold text-navy text-lg mb-1">{c.name}</h3>
+                <h3 className="font-heading font-semibold text-navy text-lg mb-1">{c.title}</h3>
                 <p className="text-saffron text-sm font-medium mb-2">Classes {c.classes}</p>
                 <p className="text-gray-500 text-sm mb-4">{c.subjects.slice(0, 3).join(' · ')}{c.subjects.length > 3 ? ' & more' : ''}</p>
                 <Link
@@ -217,11 +219,11 @@ export default function Home() {
                 whileHover={{ scale: 1.02 }}
                 className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex-shrink-0 w-56 text-center"
               >
-                <img src={t.avatar} alt={t.name} className="w-16 h-16 rounded-full mx-auto mb-3 object-cover" />
+                <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=E8951D&color=fff&size=150`} alt={t.name} className="w-16 h-16 rounded-full mx-auto mb-3 object-cover" />
                 <div className="font-heading font-semibold text-navy text-sm">{t.name}</div>
-                <div className="text-saffron font-bold text-xl my-1">{t.percentage}%</div>
-                <div className="text-xs text-gray-400 bg-gray-50 rounded-lg px-2 py-1 mb-1">{t.board} Board</div>
-                <div className="text-xs text-gray-500">{t.school}</div>
+                <div className="text-saffron font-bold text-xl my-1">{t.percentage}</div>
+                <div className="text-xs text-gray-400 bg-gray-50 rounded-lg px-2 py-1 mb-1">{t.board}</div>
+                {t.school && <div className="text-xs text-gray-500">{t.school}</div>}
               </motion.div>
             ))}
           </div>
@@ -254,13 +256,12 @@ export default function Home() {
                 variants={fadeUp}
                 className="bg-cream rounded-2xl p-6 text-center border border-gray-100 shadow-sm hover:-translate-y-1 hover:shadow-md transition-all duration-200"
               >
-                <img src={t.avatar} alt={t.name} className="w-20 h-20 rounded-full mx-auto mb-4 object-cover" />
+                <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=1B2A4A&color=fff&size=200`} alt={t.name} className="w-20 h-20 rounded-full mx-auto mb-4 object-cover" />
                 <h3 className="font-heading font-semibold text-navy">{t.name}</h3>
                 <p className="text-saffron text-sm font-medium mt-0.5">{t.subject}</p>
                 <p className="text-gray-400 text-xs mt-1">{t.qualification}</p>
                 <div className="flex justify-center gap-3 mt-3">
-                  <span className="text-xs bg-navy/5 text-navy rounded-full px-3 py-1">{t.experience} yrs exp</span>
-                  <span className="text-xs bg-emerald/10 text-emerald rounded-full px-3 py-1">{t.students}+ students</span>
+                  <span className="text-xs bg-navy/5 text-navy rounded-full px-3 py-1">{t.experience}</span>
                 </div>
               </motion.div>
             ))}
