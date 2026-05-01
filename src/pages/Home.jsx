@@ -42,7 +42,7 @@ export default function Home() {
     if (highlightToppers.length === 0) return;
     const timer = setInterval(() => {
       setCurrentTopper(prev => (prev + 1) % highlightToppers.length);
-    }, 4000);
+    }, 3000);
     return () => clearInterval(timer);
   }, [highlightToppers.length]);
 
@@ -113,11 +113,11 @@ export default function Home() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="relative hidden lg:block"
+                className="relative hidden lg:block max-w-[320px] ml-auto"
               >
                 <div className="absolute inset-0 bg-saffron/20 rounded-[2.5rem] rotate-3 scale-105" />
                 <div className="absolute inset-0 bg-white/10 rounded-[2.5rem] -rotate-3 scale-105 backdrop-blur-sm" />
-                <div className="relative bg-white rounded-[2.5rem] p-8 shadow-2xl border border-white/20 aspect-[4/5] flex flex-col items-center justify-center text-center overflow-hidden">
+                <div className="relative bg-white rounded-[2.5rem] p-6 shadow-2xl border border-white/20 aspect-[4/5] flex flex-col items-center justify-center text-center overflow-hidden">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={currentTopper}
@@ -127,30 +127,30 @@ export default function Home() {
                       transition={{ duration: 0.4 }}
                       className="flex flex-col items-center w-full"
                     >
-                      <div className="relative mb-6">
+                      <div className="relative mb-4">
                         <div className="absolute -inset-4 bg-saffron/10 rounded-full blur-xl" />
                         <img 
                           src={`https://ui-avatars.com/api/?name=${encodeURIComponent(highlightToppers[currentTopper].name)}&background=E8951D&color=fff&size=250`} 
                           alt={highlightToppers[currentTopper].name} 
-                          className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg relative z-10"
+                          className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg relative z-10"
                         />
-                        <div className="absolute -bottom-2 -right-2 bg-navy text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-20">
+                        <div className="absolute -bottom-1 -right-1 bg-navy text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg z-20">
                           {highlightToppers[currentTopper].year}
                         </div>
                       </div>
                       
-                      <div className="inline-block px-4 py-1.5 bg-saffron/10 text-saffron font-bold text-sm rounded-full mb-4">
+                      <div className="inline-block px-3 py-1 bg-saffron/10 text-saffron font-bold text-xs rounded-full mb-3">
                         {highlightToppers[currentTopper].board} Topper
                       </div>
                       
-                      <h3 className="font-heading font-bold text-3xl text-navy mb-2">
+                      <h3 className="font-heading font-bold text-2xl text-navy mb-1">
                         {highlightToppers[currentTopper].percentage}
                       </h3>
-                      <p className="text-gray-800 font-semibold text-lg mb-1">
+                      <p className="text-gray-800 font-semibold text-base mb-0.5">
                         {highlightToppers[currentTopper].name}
                       </p>
                       {highlightToppers[currentTopper].school && (
-                        <p className="text-sm text-gray-500 mb-6 max-w-[250px] line-clamp-2 mx-auto">
+                        <p className="text-[11px] text-gray-500 mb-4 max-w-[200px] line-clamp-2 mx-auto">
                           {highlightToppers[currentTopper].school}
                         </p>
                       )}
