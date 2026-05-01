@@ -14,6 +14,8 @@ import Schedule from './pages/Schedule';
 import Admissions from './pages/Admissions';
 import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
+import AdminLogin from './pages/AdminLogin';
+import AdminDashboard from './pages/AdminDashboard';
 
 const pageVariants = {
   initial: { opacity: 0, y: 12 },
@@ -54,6 +56,9 @@ export default function App() {
             <Route path="/admissions" element={<AnimatedPage><Admissions /></AnimatedPage>} />
             <Route path="/gallery" element={<AnimatedPage><Gallery /></AnimatedPage>} />
             <Route path="/contact" element={<AnimatedPage><Contact /></AnimatedPage>} />
+            <Route path="/admin" element={<AnimatedPage><AdminDashboard /></AnimatedPage>} />
+            <Route path="/admin/login" element={<AnimatedPage><AdminLogin /></AnimatedPage>} />
+            <Route path="/admin/dashboard" element={<AnimatedPage><AdminDashboard /></AnimatedPage>} />
           </Routes>
         </AnimatePresence>
       </main>

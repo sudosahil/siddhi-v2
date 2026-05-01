@@ -113,8 +113,10 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-white/10 py-5 px-4 text-center text-white/40 text-xs">
-        © 2025 {siteInfo.name}. Chembur, Mumbai. Since {siteInfo.since}.
+      <div className="border-t border-white/10 py-5 px-4 flex flex-col sm:flex-row justify-center items-center gap-2 text-white/40 text-xs">
+        <span>© 2025 {siteInfo.name}. Chembur, Mumbai. Since {siteInfo.since}.</span>
+        <span className="hidden sm:inline text-white/20">|</span>
+        <Link to="/admin" className="hover:text-white transition-colors">Admin Portal</Link>
       </div>
     </footer>
   );

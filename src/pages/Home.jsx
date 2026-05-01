@@ -1,6 +1,7 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Users, Clock, Award, BookOpen, ChevronRight, Star, MapPin, Phone, MessageCircle, Download } from 'lucide-react';
 import SectionHeader from '../components/ui/SectionHeader';
 import AnimatedCounter from '../components/ui/AnimatedCounter';
@@ -34,6 +35,17 @@ export default function Home() {
   const teacherPreview = teachers.slice(0, 3);
   const testimonialPreview = testimonials.slice(0, 3);
 
+  const highlightToppers = results.filter(r => r.highlight);
+  const [currentTopper, setCurrentTopper] = useState(0);
+
+  useEffect(() => {
+    if (highlightToppers.length === 0) return;
+    const timer = setInterval(() => {
+      setCurrentTopper(prev => (prev + 1) % highlightToppers.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [highlightToppers.length]);
+
   return (
     <>
       <Helmet>
@@ -50,49 +62,124 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy/95 to-[#0d1a30]" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-24 pb-16">
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            animate="show"
-            className="max-w-3xl"
-          >
-            <motion.span variants={fadeUp} className="inline-block bg-saffron/20 text-saffron text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full mb-6">
-              Success Begins Here
-            </motion.span>
-            <motion.h1 variants={fadeUp} className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
-              Chembur's Trusted <br />
-              <span className="text-saffron">Coaching Since 2003</span>
-            </motion.h1>
-            <motion.p variants={fadeUp} className="text-white/75 text-lg md:text-xl leading-relaxed mb-8 max-w-xl">
-              SSC Board | HSC Science &amp; Commerce | MH-CET | NEET | JEE | CA Foundation
-            </motion.p>
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
-              <DemoButton size="lg" />
-              <Link
-                to="/results"
-                className="inline-block border-2 border-white/40 text-white font-heading font-semibold rounded-full px-8 py-4 text-base hover:border-saffron hover:text-saffron transition-colors duration-200"
-              >
-                View Our Results →
-              </Link>
-              <a
-                href="/brochure.pdf"
-                download
-                className="inline-flex items-center gap-2 border-2 border-white/20 bg-white/10 text-white font-heading font-semibold rounded-full px-8 py-4 text-base hover:bg-white/20 transition-colors duration-200"
-              >
-                <Download size={18} /> Download Brochure
-              </a>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              variants={stagger}
+              initial="hidden"
+              animate="show"
+              className="max-w-2xl"
+            >
+              <motion.span variants={fadeUp} className="inline-block bg-saffron/20 text-saffron text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full mb-6">
+                Success Begins Here
+              </motion.span>
+              <motion.h1 variants={fadeUp} className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
+                Chembur's Trusted <br />
+                <span className="text-saffron">Coaching Since 2003</span>
+              </motion.h1>
+              <motion.p variants={fadeUp} className="text-white/75 text-lg md:text-xl leading-relaxed mb-8 max-w-xl">
+                SSC Board | HSC Science &amp; Commerce | MH-CET | NEET | JEE | CA Foundation
+              </motion.p>
+              <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
+                <DemoButton size="lg" />
+                <Link
+                  to="/results"
+                  className="inline-block border-2 border-white/40 text-white font-heading font-semibold rounded-full px-8 py-4 text-base hover:border-saffron hover:text-saffron transition-colors duration-200"
+                >
+                  View Our Results →
+                </Link>
+                <a
+                  href="/brochure.pdf"
+                  download
+                  className="inline-flex items-center gap-2 border-2 border-white/20 bg-white/10 text-white font-heading font-semibold rounded-full px-8 py-4 text-base hover:bg-white/20 transition-colors duration-200"
+                >
+                  <Download size={18} /> Download Brochure
+                </a>
+              </motion.div>
+              <motion.div variants={fadeUp} className="flex items-center gap-6 mt-10">
+                <div className="flex -space-x-2">
+                  {['AK', 'PS', 'RM', 'SD'].map(i => (
+                    <div key={i} className="w-8 h-8 rounded-full bg-saffron border-2 border-navy flex items-center justify-center text-xs font-bold text-white">{i[0]}</div>
+                  ))}
+                </div>
+                <p className="text-white/60 text-sm">
+                  <strong className="text-white">200+</strong> students enrolled this year
+                </p>
+              </motion.div>
             </motion.div>
-            <motion.div variants={fadeUp} className="flex items-center gap-6 mt-10">
-              <div className="flex -space-x-2">
-                {['AK', 'PS', 'RM', 'SD'].map(i => (
-                  <div key={i} className="w-8 h-8 rounded-full bg-saffron border-2 border-navy flex items-center justify-center text-xs font-bold text-white">{i[0]}</div>
-                ))}
-              </div>
-              <p className="text-white/60 text-sm">
-                <strong className="text-white">200+</strong> students enrolled this year
-              </p>
-            </motion.div>
-          </motion.div>
+
+            {/* Topper Carousel */}
+            {highlightToppers.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="relative hidden lg:block"
+              >
+                <div className="absolute inset-0 bg-saffron/20 rounded-[2.5rem] rotate-3 scale-105" />
+                <div className="absolute inset-0 bg-white/10 rounded-[2.5rem] -rotate-3 scale-105 backdrop-blur-sm" />
+                <div className="relative bg-white rounded-[2.5rem] p-8 shadow-2xl border border-white/20 aspect-[4/5] flex flex-col items-center justify-center text-center overflow-hidden">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentTopper}
+                      initial={{ opacity: 0, x: 50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -50 }}
+                      transition={{ duration: 0.4 }}
+                      className="flex flex-col items-center w-full"
+                    >
+                      <div className="relative mb-6">
+                        <div className="absolute -inset-4 bg-saffron/10 rounded-full blur-xl" />
+                        <img 
+                          src={`https://ui-avatars.com/api/?name=${encodeURIComponent(highlightToppers[currentTopper].name)}&background=E8951D&color=fff&size=250`} 
+                          alt={highlightToppers[currentTopper].name} 
+                          className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg relative z-10"
+                        />
+                        <div className="absolute -bottom-2 -right-2 bg-navy text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-20">
+                          {highlightToppers[currentTopper].year}
+                        </div>
+                      </div>
+                      
+                      <div className="inline-block px-4 py-1.5 bg-saffron/10 text-saffron font-bold text-sm rounded-full mb-4">
+                        {highlightToppers[currentTopper].board} Topper
+                      </div>
+                      
+                      <h3 className="font-heading font-bold text-3xl text-navy mb-2">
+                        {highlightToppers[currentTopper].percentage}
+                      </h3>
+                      <p className="text-gray-800 font-semibold text-lg mb-1">
+                        {highlightToppers[currentTopper].name}
+                      </p>
+                      {highlightToppers[currentTopper].school && (
+                        <p className="text-sm text-gray-500 mb-6 max-w-[250px] line-clamp-2 mx-auto">
+                          {highlightToppers[currentTopper].school}
+                        </p>
+                      )}
+                      
+                      <div className="mt-auto">
+                        <div className="flex gap-1 justify-center">
+                          {Array(5).fill(0).map((_, i) => (
+                            <Star key={i} size={16} className="fill-saffron text-saffron" />
+                          ))}
+                        </div>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+
+                  {/* Indicators */}
+                  <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-2">
+                    {highlightToppers.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setCurrentTopper(idx)}
+                        className={`w-2 h-2 rounded-full transition-all ${idx === currentTopper ? 'w-6 bg-saffron' : 'bg-gray-200 hover:bg-gray-300'}`}
+                        aria-label={`Go to slide ${idx + 1}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </div>
         </div>
 
         {/* Wave */}

@@ -46,19 +46,31 @@ function FAQItem({ q, a }) {
 
 export default function Admissions() {
   const [form, setForm] = useState({ name: '', parentName: '', class: '', board: '', phone: '', batch: '', message: '' });
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const msg = `Hi, I would like to enquire about admission at Siddhi Coaching Classes.
+    
+    // Save lead to localStorage
+    const existingLeads = JSON.parse(localStorage.getItem('siddhi_leads') || '[]');
+    const newLead = {
+      id: Date.now().toString(),
+      source: 'Admissions',
+      date: new Date().toISOString(),
+      studentName: form.name,
+      parentName: form.parentName,
+      class: form.class,
+      board: form.board,
+      phone: form.phone,
+      batch: form.batch,
+      message: form.message
+    };
+    localStorage.setItem('siddhi_leads', JSON.stringify([newLead, ...existingLeads]));
 
-*Student Name:* ${form.name}
-*Parent Name:* ${form.parentName}
-*Class:* ${form.class}
-*Board:* ${form.board}
-*Phone:* ${form.phone}
-*Preferred Batch:* ${form.batch}
-*Message:* ${form.message || 'N/A'}`;
-    window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+    // Reset form and show success
+    setForm({ name: '', parentName: '', class: '', board: '', phone: '', batch: '', message: '' });
+    setIsSubmitted(true);
+    setTimeout(() => setIsSubmitted(false), 5000);
   };
 
   const handleChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
@@ -121,7 +133,14 @@ export default function Admissions() {
             {/* Form */}
             <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
               <h2 className="font-heading font-bold text-2xl text-navy mb-6">Enquire Now</h2>
-              <form onSubmit={handleSubmit} className="space-y-4">
+              {isSubmitted ? (
+                <div className="bg-emerald-50 text-emerald-700 p-6 rounded-2xl border border-emerald-100 text-center">
+                  <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 text-emerald-600 text-xl font-bold">✓</div>
+                  <h3 className="font-heading font-semibold text-lg mb-2">Enquiry Submitted!</h3>
+                  <p className="text-sm">Thank you for your interest. Our team will get back to you shortly.</p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
                 {[
                   { name: 'name', label: 'Student Name', type: 'text', required: true },
                   { name: 'parentName', label: 'Parent / Guardian Name', type: 'text', required: true },
@@ -177,10 +196,11 @@ export default function Admissions() {
                   />
                 </div>
                 <button type="submit" className="w-full bg-saffron text-white font-heading font-semibold py-3.5 rounded-xl hover:bg-amber-600 transition-colors">
-                  Send Enquiry via WhatsApp →
+                  Submit Enquiry →
                 </button>
               </form>
-            </motion.div>
+            )}
+          </motion.div>
 
             {/* Scholarship + Info */}
             <motion.div initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-6">

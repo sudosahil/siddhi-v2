@@ -9,11 +9,31 @@ const WA_NUMBER = '919594345743';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', phone: '', message: '' });
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const msg = `Hi! My name is ${form.name}.\n\n${form.message}\n\nMy number: ${form.phone}`;
-    window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+    
+    // Save lead to localStorage
+    const existingLeads = JSON.parse(localStorage.getItem('siddhi_leads') || '[]');
+    const newLead = {
+      id: Date.now().toString(),
+      source: 'Contact',
+      date: new Date().toISOString(),
+      studentName: form.name,
+      parentName: 'N/A',
+      class: 'N/A',
+      board: 'N/A',
+      phone: form.phone,
+      batch: 'N/A',
+      message: form.message
+    };
+    localStorage.setItem('siddhi_leads', JSON.stringify([newLead, ...existingLeads]));
+
+    // Reset form and show success
+    setForm({ name: '', phone: '', message: '' });
+    setIsSubmitted(true);
+    setTimeout(() => setIsSubmitted(false), 5000);
   };
 
   return (
@@ -97,7 +117,14 @@ export default function Contact() {
               {/* Contact Form */}
               <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
                 <h3 className="font-heading font-semibold text-navy mb-4">Send us a Message</h3>
-                <form onSubmit={handleSubmit} className="space-y-4">
+                {isSubmitted ? (
+                  <div className="bg-emerald-50 text-emerald-700 p-6 rounded-2xl border border-emerald-100 text-center">
+                    <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 text-emerald-600 text-xl font-bold">✓</div>
+                    <h3 className="font-heading font-semibold text-lg mb-2">Message Sent!</h3>
+                    <p className="text-sm">Thank you. We have received your message and will contact you shortly.</p>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
                     <input type="text" required value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
@@ -113,10 +140,11 @@ export default function Contact() {
                     <textarea rows={4} required value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
                       className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-navy resize-none" placeholder="How can we help you?" />
                   </div>
-                  <button type="submit" className="w-full bg-[#25D366] text-white font-heading font-semibold py-3 rounded-xl flex items-center justify-center gap-2 hover:bg-green-600 transition-colors">
-                    <MessageCircle size={18} /> Send via WhatsApp
+                  <button type="submit" className="w-full bg-navy text-white font-heading font-semibold py-3 rounded-xl flex items-center justify-center gap-2 hover:bg-navy/90 transition-colors">
+                    Submit Message →
                   </button>
                 </form>
+                )}
               </div>
             </motion.div>
           </div>
