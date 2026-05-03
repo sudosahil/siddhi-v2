@@ -1,14 +1,15 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Users, Clock, Award, BookOpen, ChevronRight, Star, MapPin, Phone, MessageCircle, Download } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ChevronRight, Star, MapPin, Phone, MessageCircle, Download } from 'lucide-react';
 import SectionHeader from '../components/ui/SectionHeader';
 import AnimatedCounter from '../components/ui/AnimatedCounter';
 import DemoButton from '../components/ui/DemoButton';
+import TopperCarousel from '../components/ui/TopperCarousel';
 import { courses } from '../data/courses';
 import { teachers } from '../data/teachers';
 import { results } from '../data/results';
+import { topperPhotos } from '../data/topperPhotos';
 import { testimonials } from '../data/testimonials';
 import { siteInfo } from '../data/siteInfo';
 
@@ -31,20 +32,9 @@ const whyUs = [
 ];
 
 export default function Home() {
-  const topperPreview = results.filter(r => r.year === '2024-25').slice(0, 5);
+  const topperPreview = topperPhotos.slice(0, 5);
   const teacherPreview = teachers.slice(0, 3);
   const testimonialPreview = testimonials.slice(0, 3);
-
-  const highlightToppers = results.filter(r => r.highlight);
-  const [currentTopper, setCurrentTopper] = useState(0);
-
-  useEffect(() => {
-    if (highlightToppers.length === 0) return;
-    const timer = setInterval(() => {
-      setCurrentTopper(prev => (prev + 1) % highlightToppers.length);
-    }, 3000);
-    return () => clearInterval(timer);
-  }, [highlightToppers.length]);
 
   return (
     <>
@@ -61,7 +51,7 @@ export default function Home() {
         </div>
         <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy/95 to-[#0d1a30]" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-24 pb-16">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
               variants={stagger}
@@ -108,77 +98,14 @@ export default function Home() {
             </motion.div>
 
             {/* Topper Carousel */}
-            {highlightToppers.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="relative hidden lg:block max-w-[320px] ml-auto"
-              >
-                <div className="absolute inset-0 bg-saffron/20 rounded-[2.5rem] rotate-3 scale-105" />
-                <div className="absolute inset-0 bg-white/10 rounded-[2.5rem] -rotate-3 scale-105 backdrop-blur-sm" />
-                <div className="relative bg-white rounded-[2.5rem] p-6 shadow-2xl border border-white/20 aspect-[4/5] flex flex-col items-center justify-center text-center overflow-hidden">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={currentTopper}
-                      initial={{ opacity: 0, x: 50 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -50 }}
-                      transition={{ duration: 0.4 }}
-                      className="flex flex-col items-center w-full"
-                    >
-                      <div className="relative mb-4">
-                        <div className="absolute -inset-4 bg-saffron/10 rounded-full blur-xl" />
-                        <img 
-                          src={`https://ui-avatars.com/api/?name=${encodeURIComponent(highlightToppers[currentTopper].name)}&background=E8951D&color=fff&size=250`} 
-                          alt={highlightToppers[currentTopper].name} 
-                          className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg relative z-10"
-                        />
-                        <div className="absolute -bottom-1 -right-1 bg-navy text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg z-20">
-                          {highlightToppers[currentTopper].year}
-                        </div>
-                      </div>
-                      
-                      <div className="inline-block px-3 py-1 bg-saffron/10 text-saffron font-bold text-xs rounded-full mb-3">
-                        {highlightToppers[currentTopper].board} Topper
-                      </div>
-                      
-                      <h3 className="font-heading font-bold text-2xl text-navy mb-1">
-                        {highlightToppers[currentTopper].percentage}
-                      </h3>
-                      <p className="text-gray-800 font-semibold text-base mb-0.5">
-                        {highlightToppers[currentTopper].name}
-                      </p>
-                      {highlightToppers[currentTopper].school && (
-                        <p className="text-[11px] text-gray-500 mb-4 max-w-[200px] line-clamp-2 mx-auto">
-                          {highlightToppers[currentTopper].school}
-                        </p>
-                      )}
-                      
-                      <div className="mt-auto">
-                        <div className="flex gap-1 justify-center">
-                          {Array(5).fill(0).map((_, i) => (
-                            <Star key={i} size={16} className="fill-saffron text-saffron" />
-                          ))}
-                        </div>
-                      </div>
-                    </motion.div>
-                  </AnimatePresence>
-
-                  {/* Indicators */}
-                  <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-2">
-                    {highlightToppers.map((_, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => setCurrentTopper(idx)}
-                        className={`w-2 h-2 rounded-full transition-all ${idx === currentTopper ? 'w-6 bg-saffron' : 'bg-gray-200 hover:bg-gray-300'}`}
-                        aria-label={`Go to slide ${idx + 1}`}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            )}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="hidden lg:flex lg:justify-center"
+            >
+              <TopperCarousel toppers={topperPhotos} />
+            </motion.div>
           </div>
         </div>
 
@@ -297,20 +224,29 @@ export default function Home() {
             subtext="Year after year, Siddhi students top their boards. Here are our 2024 stars."
           />
           <div className="flex gap-5 overflow-x-auto pb-4 scrollbar-hide">
-            {topperPreview.map(t => (
+            {topperPreview.map((t, i) => (
               <motion.div
-                key={t.id}
+                key={t.filename}
                 initial={{ opacity: 0, x: 40 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
                 whileHover={{ scale: 1.02 }}
-                className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex-shrink-0 w-56 text-center"
+                className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex-shrink-0 w-44 text-center"
               >
-                <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=E8951D&color=fff&size=150`} alt={t.name} className="w-16 h-16 rounded-full mx-auto mb-3 object-cover" />
-                <div className="font-heading font-semibold text-navy text-sm">{t.name}</div>
-                <div className="text-saffron font-bold text-xl my-1">{t.percentage}</div>
-                <div className="text-xs text-gray-400 bg-gray-50 rounded-lg px-2 py-1 mb-1">{t.board}</div>
-                {t.school && <div className="text-xs text-gray-500">{t.school}</div>}
+                <div className="w-full aspect-square bg-gray-50">
+                  <img
+                    src={`/toppers/${t.filename}`}
+                    alt={t.name}
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=E8951D&color=fff&size=200`; }}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <div className="p-3">
+                  <div className="font-heading font-semibold text-navy text-sm">{t.name}</div>
+                  <div className="text-saffron font-bold text-lg my-0.5">{t.percentage}</div>
+                  <div className="text-xs text-gray-400 bg-gray-50 rounded-lg px-2 py-0.5">{t.board}</div>
+                </div>
               </motion.div>
             ))}
           </div>

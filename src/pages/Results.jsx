@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionHeader from '../components/ui/SectionHeader';
 import AnimatedCounter from '../components/ui/AnimatedCounter';
 import { results, resultStats } from '../data/results';
+import { getTopperPhoto } from '../data/topperPhotos';
 
 const years = ['2024-25', 'Previous Batch'];
 const categories = ['All', 'SSC', 'Science', 'Commerce', 'Entrance'];
@@ -103,26 +104,30 @@ export default function Results() {
                 <motion.div
                   key={r.id}
                   whileHover={{ scale: 1.02 }}
-                  className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 text-center"
+                  className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 text-center"
                 >
-                  <div className="relative inline-block mb-3">
+                  {/* Photo */}
+                  <div className="relative w-full aspect-square bg-gray-50">
                     <img
-                      src={`https://ui-avatars.com/api/?name=${encodeURIComponent(r.name)}&background=E8951D&color=fff&size=150`}
+                      src={getTopperPhoto(r.name) || `https://ui-avatars.com/api/?name=${encodeURIComponent(r.name)}&background=E8951D&color=fff&size=200`}
                       alt={r.name}
-                      className="w-16 h-16 rounded-full object-cover"
+                      onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(r.name)}&background=E8951D&color=fff&size=200`; }}
+                      className={`w-full h-full ${getTopperPhoto(r.name) ? 'object-contain' : 'object-cover'}`}
                     />
                     {r.highlight && (
-                      <span className="absolute -top-1 -right-1 w-5 h-5 bg-saffron rounded-full border-2 border-white" />
+                      <span className="absolute top-2 right-2 w-5 h-5 bg-saffron rounded-full border-2 border-white shadow" />
                     )}
                   </div>
-                  <h3 className="font-heading font-semibold text-navy text-sm">{r.name}</h3>
-                  <div className="text-2xl font-bold text-saffron my-1">{r.percentage}</div>
-                  <span className={`inline-block text-xs font-semibold px-2 py-0.5 rounded-full mb-2 ${r.category === 'SSC' ? 'bg-navy/10 text-navy' : r.category === 'Science' ? 'bg-emerald/10 text-emerald' : 'bg-saffron/10 text-saffron'}`}>
-                    {r.category}
-                  </span>
-                  {r.school && <p className="text-xs text-gray-500 mb-1">{r.school}</p>}
-                  {r.rank && <p className="text-xs text-emerald font-semibold">{r.rank}</p>}
-                  {r.highlight && <p className="text-xs text-saffron font-semibold mt-1">{r.highlight}</p>}
+                  {/* Info */}
+                  <div className="p-4">
+                    <h3 className="font-heading font-semibold text-navy text-sm">{r.name}</h3>
+                    <div className="text-2xl font-bold text-saffron my-1">{r.percentage}</div>
+                    <span className={`inline-block text-xs font-semibold px-2 py-0.5 rounded-full mb-2 ${r.category === 'SSC' ? 'bg-navy/10 text-navy' : r.category === 'Science' ? 'bg-emerald/10 text-emerald' : 'bg-saffron/10 text-saffron'}`}>
+                      {r.category}
+                    </span>
+                    {r.school && <p className="text-xs text-gray-500 mb-1">{r.school}</p>}
+                    {r.rank && <p className="text-xs text-emerald font-semibold">{r.rank}</p>}
+                  </div>
                 </motion.div>
               ))}
             </motion.div>
