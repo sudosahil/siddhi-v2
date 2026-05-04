@@ -23,9 +23,7 @@ export default function Footer() {
         {/* Brand */}
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <div className="w-9 h-9 bg-saffron rounded-lg flex items-center justify-center">
-              <span className="text-white font-heading font-bold text-lg">S</span>
-            </div>
+            <img src="/siddhi-logo.jpeg" alt="Siddhi's Coaching" className="w-10 h-10 rounded-lg object-cover" />
             <div>
               <div className="font-heading font-bold text-base">{siteInfo.name}</div>
               <div className="text-white/60 text-xs">Chembur, Mumbai</div>

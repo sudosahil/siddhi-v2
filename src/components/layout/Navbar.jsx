@@ -31,9 +31,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <div className="w-9 h-9 bg-saffron rounded-lg flex items-center justify-center">
-            <span className="text-white font-heading font-bold text-lg">S</span>
-          </div>
+          <img src="/siddhi-logo.jpeg" alt="Siddhi's Coaching" className="w-10 h-10 rounded-lg object-cover" />
           <div className="leading-tight">
             <div className={`font-heading font-bold text-sm md:text-base ${scrolled ? 'text-navy' : 'text-white'}`}>Siddhi's Coaching</div>
             <div className={`text-xs ${scrolled ? 'text-gray-500' : 'text-white/70'}`}>Chembur, Mumbai</div>

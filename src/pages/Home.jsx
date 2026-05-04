@@ -59,10 +59,7 @@ export default function Home() {
               animate="show"
               className="max-w-2xl"
             >
-              <motion.span variants={fadeUp} className="inline-block bg-saffron/20 text-saffron text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full mb-6">
-                Success Begins Here
-              </motion.span>
-              <motion.h1 variants={fadeUp} className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
+<motion.h1 variants={fadeUp} className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
                 Chembur's Trusted <br />
                 <span className="text-saffron">Coaching Since 2003</span>
               </motion.h1>
