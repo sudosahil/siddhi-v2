@@ -85,16 +85,14 @@ export default function Gallery() {
                 <motion.div
                   key={src}
                   className="mb-3 break-inside-avoid cursor-pointer rounded-xl overflow-hidden relative group shadow-sm"
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-40px' }}
-                  transition={{ duration: 0.4, delay: (i % 8) * 0.04 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.35, delay: (i % 12) * 0.03 }}
                   onClick={() => open(i)}
                 >
                   <img
                     src={src}
                     alt={`Gallery photo ${i + 1}`}
-                    loading="lazy"
                     className="w-full block transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-navy/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
