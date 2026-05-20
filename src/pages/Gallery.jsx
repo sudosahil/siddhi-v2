@@ -2,10 +2,51 @@ import { useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, ZoomIn, Images } from 'lucide-react';
+import manifest from '../data/gallery-manifest.json';
 
-// Drop any new image in public/gallery/ and restart the dev server — it appears automatically.
-const _keys = Object.keys(import.meta.glob('/public/gallery/*.{JPG,jpg,jpeg,JPEG,png,PNG,webp,WEBP}'));
-const photos = _keys.map(k => `/gallery/${k.split('/').pop()}`).sort();
+function GalleryPhoto({ photo, index, onClick }) {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <motion.div
+      className="mb-3 break-inside-avoid cursor-pointer rounded-xl overflow-hidden relative group shadow-sm"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3, delay: (index % 12) * 0.03 }}
+      onClick={onClick}
+    >
+      {/* Blur placeholder — visible while thumb is loading */}
+      <div
+        aria-hidden
+        className="absolute inset-0 transition-opacity duration-500"
+        style={{
+          backgroundImage: `url(${photo.blur})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          filter: 'blur(12px)',
+          transform: 'scale(1.1)',
+          opacity: loaded ? 0 : 1,
+        }}
+      />
+      {/* Thumbnail */}
+      <img
+        src={`/gallery/thumbs/${photo.file}`}
+        alt={`Gallery photo ${index + 1}`}
+        width={photo.width}
+        height={photo.height}
+        loading={index < 12 ? 'eager' : 'lazy'}
+        onLoad={() => setLoaded(true)}
+        className={`relative w-full block transition-all duration-500 group-hover:scale-105 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+      />
+      {/* Hover overlay */}
+      <div className="absolute inset-0 bg-navy/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+        <div className="bg-white/20 backdrop-blur-sm rounded-full p-3 scale-75 group-hover:scale-100 transition-transform duration-300">
+          <ZoomIn size={22} className="text-white" />
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function Gallery() {
   const [lightboxIndex, setLightboxIndex] = useState(null);
@@ -13,8 +54,8 @@ export default function Gallery() {
   const isOpen = lightboxIndex !== null;
   const open   = (i) => setLightboxIndex(i);
   const close  = useCallback(() => setLightboxIndex(null), []);
-  const prev   = useCallback(() => setLightboxIndex(i => (i - 1 + photos.length) % photos.length), []);
-  const next   = useCallback(() => setLightboxIndex(i => (i + 1) % photos.length), []);
+  const prev   = useCallback(() => setLightboxIndex(i => (i - 1 + manifest.length) % manifest.length), []);
+  const next   = useCallback(() => setLightboxIndex(i => (i + 1) % manifest.length), []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -54,7 +95,7 @@ export default function Gallery() {
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mt-6 inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-5 py-2 text-white/80 text-sm">
             <Images size={15} />
-            {photos.length} photos
+            {manifest.length} photos
           </motion.div>
         </div>
         <div className="absolute bottom-0 left-0 right-0">
@@ -67,41 +108,23 @@ export default function Gallery() {
       {/* Masonry Grid */}
       <section className="py-14 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          {photos.length === 0 ? (
+          {manifest.length === 0 ? (
             <div className="text-center py-24 text-gray-400">
               <Images size={48} className="mx-auto mb-4 opacity-30" />
               <p className="font-heading font-semibold text-lg">No photos yet</p>
-              <p className="text-sm mt-1">Add images to <code>public/gallery/</code> to see them here.</p>
+              <p className="text-sm mt-1">Add images to <code>public/gallery/</code> and run <code>npm run compress-gallery</code>.</p>
             </div>
           ) : (
             <div style={{ columns: '2', columnGap: '12px' }} className="[column-count:2] sm:[column-count:3] lg:[column-count:4]">
-              {photos.map((src, i) => (
-                <motion.div
-                  key={src}
-                  className="mb-3 break-inside-avoid cursor-pointer rounded-xl overflow-hidden relative group shadow-sm"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.35, delay: (i % 12) * 0.03 }}
-                  onClick={() => open(i)}
-                >
-                  <img
-                    src={src}
-                    alt={`Gallery photo ${i + 1}`}
-                    className="w-full block transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-navy/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-3 scale-75 group-hover:scale-100 transition-transform duration-300">
-                      <ZoomIn size={22} className="text-white" />
-                    </div>
-                  </div>
-                </motion.div>
+              {manifest.map((photo, i) => (
+                <GalleryPhoto key={photo.file} photo={photo} index={i} onClick={() => open(i)} />
               ))}
             </div>
           )}
         </div>
       </section>
 
-      {/* Lightbox */}
+      {/* Lightbox — uses full-size image */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -113,7 +136,7 @@ export default function Gallery() {
             onClick={close}
           >
             <div className="absolute top-5 left-1/2 -translate-x-1/2 text-white/50 text-sm font-medium tabular-nums pointer-events-none">
-              {lightboxIndex + 1} / {photos.length}
+              {lightboxIndex + 1} / {manifest.length}
             </div>
 
             <button onClick={close} className="absolute top-4 right-4 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-2.5 transition-all z-10" aria-label="Close">
@@ -127,7 +150,7 @@ export default function Gallery() {
             <AnimatePresence mode="wait">
               <motion.img
                 key={lightboxIndex}
-                src={photos[lightboxIndex]}
+                src={`/gallery/${manifest[lightboxIndex].file}`}
                 alt={`Gallery photo ${lightboxIndex + 1}`}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
