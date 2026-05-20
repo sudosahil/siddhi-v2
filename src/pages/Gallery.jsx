@@ -1,21 +1,40 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight, ZoomIn, Images } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, ZoomIn, Images, Loader2 } from 'lucide-react';
 
-// Auto-scans public/gallery/ at build time.
-// Drop any new image in that folder and restart the dev server — it appears automatically.
-const _keys = Object.keys(import.meta.glob('/public/gallery/*.{JPG,jpg,jpeg,JPEG,png,PNG,webp,WEBP}'));
-const photos = _keys.map(k => `/gallery/${k.split('/').pop()}`).sort();
+const CLOUD = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+
+const thumbUrl = (publicId, fmt) =>
+  `https://res.cloudinary.com/${CLOUD}/image/upload/w_600,q_auto,f_auto/${publicId}.${fmt}`;
+
+const fullUrl = (publicId, fmt) =>
+  `https://res.cloudinary.com/${CLOUD}/image/upload/w_1600,q_auto,f_auto/${publicId}.${fmt}`;
 
 export default function Gallery() {
+  const [photos, setPhotos]       = useState([]);
+  const [status, setStatus]       = useState('loading'); // loading | ready | error
   const [lightboxIndex, setLightboxIndex] = useState(null);
+
+  useEffect(() => {
+    if (!CLOUD) { setStatus('error'); return; }
+    fetch(`https://res.cloudinary.com/${CLOUD}/image/list/gallery.json`)
+      .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+      .then(data => {
+        const sorted = [...data.resources].sort((a, b) =>
+          a.public_id.localeCompare(b.public_id)
+        );
+        setPhotos(sorted);
+        setStatus('ready');
+      })
+      .catch(() => setStatus('error'));
+  }, []);
 
   const isOpen = lightboxIndex !== null;
   const open   = (i) => setLightboxIndex(i);
   const close  = useCallback(() => setLightboxIndex(null), []);
-  const prev   = useCallback(() => setLightboxIndex(i => (i - 1 + photos.length) % photos.length), []);
-  const next   = useCallback(() => setLightboxIndex(i => (i + 1) % photos.length), []);
+  const prev   = useCallback(() => setLightboxIndex(i => (i - 1 + photos.length) % photos.length), [photos.length]);
+  const next   = useCallback(() => setLightboxIndex(i => (i + 1) % photos.length), [photos.length]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -53,10 +72,12 @@ export default function Gallery() {
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-white/70 text-lg max-w-2xl mx-auto">
             Moments from classrooms, events, and student life — a glimpse into what makes Siddhi's special.
           </motion.p>
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mt-6 inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-5 py-2 text-white/80 text-sm">
-            <Images size={15} />
-            {photos.length} photos
-          </motion.div>
+          {status === 'ready' && (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mt-6 inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-5 py-2 text-white/80 text-sm">
+              <Images size={15} />
+              {photos.length} photos
+            </motion.div>
+          )}
         </div>
         <div className="absolute bottom-0 left-0 right-0">
           <svg viewBox="0 0 1440 60" className="w-full fill-cream" preserveAspectRatio="none">
@@ -65,25 +86,41 @@ export default function Gallery() {
         </div>
       </section>
 
-      {/* Masonry Grid */}
+      {/* Grid */}
       <section className="py-14 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          {photos.length === 0 ? (
+
+          {status === 'loading' && (
+            <div className="flex flex-col items-center justify-center py-32 text-gray-400 gap-3">
+              <Loader2 size={36} className="animate-spin opacity-40" />
+              <p className="text-sm">Loading photos…</p>
+            </div>
+          )}
+
+          {status === 'error' && (
+            <div className="text-center py-24 text-gray-400">
+              <Images size={48} className="mx-auto mb-4 opacity-30" />
+              <p className="font-heading font-semibold text-lg">Gallery unavailable</p>
+              <p className="text-sm mt-1">Set <code>VITE_CLOUDINARY_CLOUD_NAME</code> in <code>.env.local</code> and enable the Resource List in Cloudinary security settings.</p>
+            </div>
+          )}
+
+          {status === 'ready' && photos.length === 0 && (
             <div className="text-center py-24 text-gray-400">
               <Images size={48} className="mx-auto mb-4 opacity-30" />
               <p className="font-heading font-semibold text-lg">No photos yet</p>
-              <p className="text-sm mt-1">Add images to <code>public/gallery/</code> to see them here.</p>
+              <p className="text-sm mt-1">Upload images to Cloudinary with the tag <code>gallery</code>.</p>
             </div>
-          ) : (
-            <div style={{
-              columns: '2',
-              columnGap: '12px',
-            }}
-            className="[column-count:2] sm:[column-count:3] lg:[column-count:4]"
+          )}
+
+          {status === 'ready' && photos.length > 0 && (
+            <div
+              style={{ columns: '2', columnGap: '12px' }}
+              className="[column-count:2] sm:[column-count:3] lg:[column-count:4]"
             >
-              {photos.map((src, i) => (
+              {photos.map((photo, i) => (
                 <motion.div
-                  key={src}
+                  key={photo.public_id}
                   className="mb-3 break-inside-avoid cursor-pointer rounded-xl overflow-hidden relative group shadow-sm"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -91,7 +128,7 @@ export default function Gallery() {
                   onClick={() => open(i)}
                 >
                   <img
-                    src={src}
+                    src={thumbUrl(photo.public_id, photo.format)}
                     alt={`Gallery photo ${i + 1}`}
                     className="w-full block transition-transform duration-500 group-hover:scale-105"
                   />
@@ -118,34 +155,22 @@ export default function Gallery() {
             className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
             onClick={close}
           >
-            {/* Counter */}
             <div className="absolute top-5 left-1/2 -translate-x-1/2 text-white/50 text-sm font-medium tabular-nums pointer-events-none">
               {lightboxIndex + 1} / {photos.length}
             </div>
 
-            {/* Close */}
-            <button
-              onClick={close}
-              className="absolute top-4 right-4 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-2.5 transition-all z-10"
-              aria-label="Close"
-            >
+            <button onClick={close} className="absolute top-4 right-4 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-2.5 transition-all z-10" aria-label="Close">
               <X size={20} />
             </button>
 
-            {/* Prev */}
-            <button
-              onClick={(e) => { e.stopPropagation(); prev(); }}
-              className="absolute left-3 sm:left-6 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-3 transition-all z-10"
-              aria-label="Previous photo"
-            >
+            <button onClick={(e) => { e.stopPropagation(); prev(); }} className="absolute left-3 sm:left-6 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-3 transition-all z-10" aria-label="Previous photo">
               <ChevronLeft size={26} />
             </button>
 
-            {/* Image */}
             <AnimatePresence mode="wait">
               <motion.img
                 key={lightboxIndex}
-                src={photos[lightboxIndex]}
+                src={fullUrl(photos[lightboxIndex].public_id, photos[lightboxIndex].format)}
                 alt={`Gallery photo ${lightboxIndex + 1}`}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -156,12 +181,7 @@ export default function Gallery() {
               />
             </AnimatePresence>
 
-            {/* Next */}
-            <button
-              onClick={(e) => { e.stopPropagation(); next(); }}
-              className="absolute right-3 sm:right-6 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-3 transition-all z-10"
-              aria-label="Next photo"
-            >
+            <button onClick={(e) => { e.stopPropagation(); next(); }} className="absolute right-3 sm:right-6 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-3 transition-all z-10" aria-label="Next photo">
               <ChevronRight size={26} />
             </button>
           </motion.div>
