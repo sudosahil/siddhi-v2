@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Users, Trash2, LogOut, Calendar, Phone } from 'lucide-react';
+import { Users, Trash2, LogOut, Calendar, Phone, CheckCircle, XCircle, Download } from 'lucide-react';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -39,6 +39,39 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleToggleContacted = (id) => {
+    const updatedLeads = leads.map(l =>
+      l.id === id ? { ...l, contacted: !l.contacted } : l
+    );
+    localStorage.setItem('siddhi_leads', JSON.stringify(updatedLeads));
+    setLeads(updatedLeads);
+  };
+
+  const handleExportCSV = () => {
+    if (leads.length === 0) return;
+    const headers = ['Date', 'Source', 'Student Name', 'Parent Name', 'Phone', 'Class', 'Board', 'Batch', 'Message', 'Contacted'];
+    const rows = leads.map(l => [
+      formatDate(l.date),
+      l.source,
+      l.studentName,
+      l.parentName || '',
+      l.phone,
+      l.class || '',
+      l.board || '',
+      l.batch || '',
+      (l.message || '').replace(/,/g, ';'),
+      l.contacted ? 'Yes' : 'No',
+    ]);
+    const csv = [headers, ...rows].map(r => r.join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `siddhi-leads-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleString('en-IN', {
       day: 'numeric', month: 'short', year: 'numeric',
@@ -60,13 +93,19 @@ export default function AdminDashboard() {
               <p className="text-gray-500 mt-1">Manage inquiries and admission requests</p>
             </div>
             <div className="flex items-center gap-3">
-              <button 
+              <button
+                onClick={handleExportCSV}
+                className="flex items-center gap-2 bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+              >
+                <Download size={16} /> Export CSV
+              </button>
+              <button
                 onClick={handleClearLeads}
                 className="flex items-center gap-2 bg-red-50 text-red-600 border border-red-100 hover:bg-red-100 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
               >
                 <Trash2 size={16} /> Clear All
               </button>
-              <button 
+              <button
                 onClick={handleLogout}
                 className="flex items-center gap-2 bg-navy text-white hover:bg-navy/90 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
               >
@@ -76,7 +115,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-8">
             <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
                 <Users size={24} />
@@ -104,6 +143,15 @@ export default function AdminDashboard() {
                 <p className="text-2xl font-bold text-navy">{leads.filter(l => l.source === 'Contact').length}</p>
               </div>
             </div>
+            <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center text-green-600">
+                <CheckCircle size={24} />
+              </div>
+              <div>
+                <p className="text-sm text-gray-500 font-medium">Contacted</p>
+                <p className="text-2xl font-bold text-navy">{leads.filter(l => l.contacted).length}</p>
+              </div>
+            </div>
           </div>
 
           {/* Leads Table */}
@@ -126,12 +174,13 @@ export default function AdminDashboard() {
                       <th className="px-6 py-4 font-semibold">Contact Info</th>
                       <th className="px-6 py-4 font-semibold">Course Details</th>
                       <th className="px-6 py-4 font-semibold">Message</th>
+                      <th className="px-6 py-4 font-semibold">Status</th>
                       <th className="px-6 py-4 font-semibold text-right">Action</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-50">
                     {leads.map((lead) => (
-                      <tr key={lead.id} className="hover:bg-gray-50/50 transition-colors">
+                      <tr key={lead.id} className={`hover:bg-gray-50/50 transition-colors ${lead.contacted ? 'bg-green-50/30' : ''}`}>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center gap-2 mb-1">
                             <Calendar size={14} className="text-gray-400" />
@@ -168,8 +217,23 @@ export default function AdminDashboard() {
                             {lead.message || <span className="italic text-gray-400">No message</span>}
                           </p>
                         </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <button
+                            onClick={() => handleToggleContacted(lead.id)}
+                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                              lead.contacted
+                                ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                                : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                            }`}
+                          >
+                            {lead.contacted
+                              ? <><CheckCircle size={13} /> Contacted</>
+                              : <><XCircle size={13} /> Not Contacted</>
+                            }
+                          </button>
+                        </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right">
-                          <button 
+                          <button
                             onClick={() => handleDeleteLead(lead.id)}
                             className="text-gray-400 hover:text-red-500 transition-colors p-1.5 rounded-lg hover:bg-red-50"
                             title="Delete Lead"

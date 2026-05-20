@@ -46,33 +46,47 @@ export const teachers = [
   },
   {
     id: 6,
-    name: "CA. Yogesh T",
+    name: "CA Yogesh T",
     subject: "Accounts / CA Foundation",
     qualification: "Chartered Accountant (CA)",
     experience: "Practising CA",
     section: "Commerce",
+    photo: "Yogesh T.jpeg",
     highlight: "Qualified CA teaching Accounts and CA Foundation with real-world practice knowledge"
   },
   {
     id: 7,
-    name: "Prof. Harish",
+    name: "Prof. Harish K",
     subject: "Business Studies / OCM",
-    qualification: "BMS — Corporate Manager",
-    experience: "10 Years",
+    qualification: "MBA — Industry Manager",
+    experience: "Industry Professional",
     section: "Commerce",
-    highlight: "10 years teaching experience with active corporate management background"
+    photo: "Prof Harish K.jpeg",
+    objectPosition: "center top",
+    highlight: "MBA professional with active industry management experience"
   },
   {
     id: 8,
-    name: "CS Dimple K",
+    name: "CS Dimple D",
     subject: "Company Secretary / Commerce Law",
     qualification: "Company Secretary (CS)",
     experience: "Practising CS",
     section: "Commerce",
+    photo: "CS Dimple D.jpeg",
     highlight: "Qualified Company Secretary — unique expertise in Commerce legal subjects"
   },
   {
     id: 9,
+    name: "Dr. Pranav P",
+    subject: "Biology / NEET",
+    qualification: "MBBS — Sion Hospital, Mumbai",
+    experience: "Practising Doctor",
+    section: "Entrance",
+    photo: "Dr Pranav P.jpeg",
+    highlight: "Practising MBBS doctor from Sion Hospital, Mumbai — brings real clinical insight to NEET coaching"
+  },
+  {
+    id: 10,
     name: "Prof. Tanmeet Kaur Sehgal",
     subject: "Psychology / Student Counselling",
     qualification: "MA Psychology (Clinical)",

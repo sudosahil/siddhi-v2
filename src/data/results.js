@@ -1,4 +1,12 @@
 export const results = [
+  // SSC 2025-26 Toppers
+  { id: 27, name: "Nandini Agawane",   percentage: "95.00%", rank: "1st Rank", school: "Adarsha Vidyalaya",                    board: "SSC", year: "2025-26", category: "SSC", highlight: true },
+  { id: 28, name: "Lakshita Kasotiya", percentage: "92.40%", rank: "1st Rank", school: "Swami Vivekanand (Sindhi Society)",     board: "SSC", year: "2025-26", category: "SSC", highlight: true },
+  { id: 29, name: "Neha Kamble",       percentage: "92.00%", rank: "2nd Rank", school: "Adarsha Vidyalaya",                    board: "SSC", year: "2025-26", category: "SSC" },
+  { id: 30, name: "Sayyuj Paliwan",    percentage: "91.80%", rank: "2nd Rank", school: "SKP School (Kurla)",                   board: "SSC", year: "2025-26", category: "SSC" },
+  { id: 31, name: "Shlok Jog",         percentage: "91.00%", school: "",       board: "SSC", year: "2025-26", category: "SSC" },
+  { id: 32, name: "Nidhi Balotia",     percentage: "90.00%", school: "",       board: "SSC", year: "2025-26", category: "SSC" },
+  { id: 33, name: "Atharva Dhawan",    percentage: "90.00%", school: "",       board: "SSC", year: "2025-26", category: "SSC" },
   // SSC 2024-25 Toppers
   { id: 1, name: "Nirmal Mishra", percentage: "95.40%", rank: "Rank 2nd", school: "Adarsha Vidyalaya", board: "SSC", year: "2024-25", category: "SSC", highlight: true },
   { id: 2, name: "Parth Jaiswal", percentage: "94.20%", rank: "Rank 3rd", school: "Adarsha Vidyalaya", board: "SSC", year: "2024-25", category: "SSC", highlight: true },

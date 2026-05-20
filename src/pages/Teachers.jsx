@@ -61,33 +61,34 @@ export default function Teachers() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
               {filtered.map(t => (
                 <motion.div
                   key={t.id}
-                  whileHover={{ y: -6, boxShadow: '0 12px 40px rgba(27,42,74,0.12)' }}
-                  className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm text-center transition-all duration-200"
+                  whileHover={{ scale: 1.02 }}
+                  className="bg-white rounded-2xl overflow-hidden shadow-md border border-gray-200 text-center"
                 >
-                  <div className="relative inline-block mb-4">
+                  {/* Photo */}
+                  <div className="relative w-full aspect-[3/4] bg-gray-50">
                     <img
-                      src={`https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=1B2A4A&color=fff&size=200`}
+                      src={t.photo ? `/teachers/${t.photo}` : `https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=1B2A4A&color=fff&size=400`}
                       alt={t.name}
-                      className="w-20 h-20 rounded-full object-cover"
+                      onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=1B2A4A&color=fff&size=400`; }}
+                      style={t.objectPosition ? { objectPosition: t.objectPosition } : undefined}
+                      className="w-full h-full object-cover"
                     />
                   </div>
-                  <h3 className="font-heading font-semibold text-navy text-base">{t.name}</h3>
-                  <p className="text-saffron text-sm font-medium mt-0.5">{t.subject}</p>
-                  <div className="flex items-center justify-center gap-1.5 mt-2 text-xs text-gray-400">
-                    <GraduationCap size={12} />
-                    {t.qualification}
+                  {/* Info */}
+                  <div className="p-4">
+                    <h3 className="font-heading font-semibold text-navy text-sm">{t.name}</h3>
+                    <p className="text-saffron text-sm font-medium mt-0.5">{t.subject}</p>
+                    <div className="flex items-center justify-center gap-1 mt-2 text-xs text-gray-500">
+                      <GraduationCap size={11} />
+                      <span>{t.qualification}</span>
+                    </div>
+                    <span className="inline-block mt-2 text-xs bg-navy/5 text-navy rounded-full px-3 py-1">{t.experience}</span>
                   </div>
-
-                  <div className="flex justify-center mt-3">
-                    <span className="text-xs bg-navy/5 text-navy rounded-full px-3 py-1">{t.experience}</span>
-                  </div>
-
-                  <p className="text-gray-400 text-xs italic mt-4 leading-relaxed line-clamp-3">{t.highlight}</p>
                 </motion.div>
               ))}
             </motion.div>

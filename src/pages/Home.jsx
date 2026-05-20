@@ -9,7 +9,7 @@ import TopperCarousel from '../components/ui/TopperCarousel';
 import { courses } from '../data/courses';
 import { teachers } from '../data/teachers';
 import { results } from '../data/results';
-import { topperPhotos } from '../data/topperPhotos';
+import { latestToppers } from '../data/topperPhotos';
 import { testimonials } from '../data/testimonials';
 import { siteInfo } from '../data/siteInfo';
 
@@ -32,7 +32,7 @@ const whyUs = [
 ];
 
 export default function Home() {
-  const topperPreview = topperPhotos.slice(0, 5);
+  const topperPreview = latestToppers.slice(0, 5);
   const teacherPreview = teachers.slice(0, 3);
   const testimonialPreview = testimonials.slice(0, 3);
 
@@ -101,7 +101,7 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="hidden lg:flex lg:justify-center"
             >
-              <TopperCarousel toppers={topperPhotos} />
+              <TopperCarousel toppers={latestToppers} />
             </motion.div>
           </div>
         </div>

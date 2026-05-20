@@ -1,6 +1,18 @@
 // To add a new topper: drop their photo in public/toppers/ and add one line here.
 // filename must match exactly what's in public/toppers/ (case-sensitive on Linux).
+
+export const latestToppers = [
+  { filename: 'Nandini Agawane.jpeg',   name: 'Nandini Agawane',   percentage: '95.00%', board: 'SSC', year: '2025-26', achievement: '1st Rank — Adarsha Vidyalaya' },
+  { filename: 'Neha Kamble.jpeg',       name: 'Neha Kamble',       percentage: '92.00%', board: 'SSC', year: '2025-26', achievement: '2nd Rank — Adarsha Vidyalaya' },
+  { filename: 'Lakshita Kasotiya.jpeg', name: 'Lakshita Kasotiya', percentage: '92.40%', board: 'SSC', year: '2025-26', achievement: '1st Rank — Swami Vivekanand (Sindhi Society)' },
+  { filename: 'Nidhi Balotia.jpeg',     name: 'Nidhi Balotia',     percentage: '90.00%', board: 'SSC', year: '2025-26' },
+  { filename: 'Shlok Jog.jpeg',         name: 'Shlok Jog',         percentage: '91.00%', board: 'SSC', year: '2025-26' },
+  { filename: 'Sayyuj Paliwan.jpeg',    name: 'Sayyuj Paliwan',    percentage: '91.80%', board: 'SSC', year: '2025-26', achievement: '2nd Rank — SKP School (Kurla)' },
+  { filename: 'Atharva Dhawan.jpeg',    name: 'Atharva Dhawan',    percentage: '90.00%', board: 'SSC', year: '2025-26' },
+];
+
 export const topperPhotos = [
+  ...latestToppers,
   { filename: 'Nirmal-Mishra.png',     name: 'Nirmal Mishra',     percentage: '95.40%', board: 'SSC', year: '2024-25' },
   { filename: 'Parth-Jaiswal.png',     name: 'Parth Jaiswal',     percentage: '94.20%', board: 'SSC', year: '2024-25' },
   { filename: 'Laxmi-Pilaya.png',      name: 'Laxmi Paliya',      percentage: '93.60%', board: 'SSC', year: '2024-25' },
@@ -16,7 +28,6 @@ export const topperPhotos = [
   { filename: 'Jitesh-Mourya.png',     name: 'Jitesh Mourya',     percentage: '90.00%', board: 'SSC', year: '2024-25' },
 ];
 
-// Lookup by name (case-insensitive) → photo URL
 const _lookup = new Map(topperPhotos.map(t => [t.name.toLowerCase(), t.filename]));
 
 export function getTopperPhoto(name) {

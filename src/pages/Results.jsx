@@ -6,15 +6,15 @@ import AnimatedCounter from '../components/ui/AnimatedCounter';
 import { results, resultStats } from '../data/results';
 import { getTopperPhoto } from '../data/topperPhotos';
 
-const years = ['2024-25', 'Previous Batch'];
+const years = ['All Years', '2025-26', '2024-25', 'Previous Batch'];
 const categories = ['All', 'SSC', 'Science', 'Commerce', 'Entrance'];
 
 export default function Results() {
-  const [year, setYear] = useState('2024-25');
+  const [year, setYear] = useState('All Years');
   const [category, setCategory] = useState('All');
 
   const filtered = results.filter(r =>
-    r.year === year && (category === 'All' || r.category === category)
+    (year === 'All Years' || r.year === year) && (category === 'All' || r.category === category)
   );
 
   return (
