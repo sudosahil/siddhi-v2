@@ -10,7 +10,16 @@
       "Bash(git commit -m ' *)",
       "Bash(git remote *)",
       "Bash(git branch *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(Get-ChildItem -Path \"D:\\\\official projects\\\\siddhi-v2\" -Force)",
+      "Bash(Select-Object Name, Mode)",
+      "PowerShell(New-Item *)",
+      "Bash(Copy-Item *)",
+      "PowerShell(Copy-Item *)",
+      "Bash(git commit -m 'fix: eager-load all gallery images on page mount, remove lazy/viewport triggers *)",
+      "Bash(git fetch *)",
+      "Bash(git ls-remote *)",
+      "Bash(git rm *)"
     ]
   }
 }
