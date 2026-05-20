@@ -1,58 +1,62 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
-import SectionHeader from '../components/ui/SectionHeader';
+import { X, ChevronLeft, ChevronRight, ZoomIn, Images } from 'lucide-react';
 
-const categories = ['All', 'Classrooms', 'Events', 'Prize Distribution', 'Activities'];
-
-const images = [
-  { id: 1, src: 'https://picsum.photos/seed/classroom1/600/400', caption: 'Our Spacious Classroom — Batch A', category: 'Classrooms' },
-  { id: 2, src: 'https://picsum.photos/seed/classroom2/600/400', caption: 'Smart Board in Action', category: 'Classrooms' },
-  { id: 3, src: 'https://picsum.photos/seed/classroom3/600/400', caption: 'Library and Study Area', category: 'Classrooms' },
-  { id: 4, src: 'https://picsum.photos/seed/event1/600/400', caption: 'Annual Day 2024 — Cultural Programme', category: 'Events' },
-  { id: 5, src: 'https://picsum.photos/seed/event2/600/400', caption: 'Science Exhibition — Students at Display', category: 'Events' },
-  { id: 6, src: 'https://picsum.photos/seed/event3/600/400', caption: 'Parent-Teacher Meeting — June 2024', category: 'Events' },
-  { id: 7, src: 'https://picsum.photos/seed/prize1/600/400', caption: 'SSC Topper Felicitation — 2024', category: 'Prize Distribution' },
-  { id: 8, src: 'https://picsum.photos/seed/prize2/600/400', caption: 'CBSE Board Toppers Awarded', category: 'Prize Distribution' },
-  { id: 9, src: 'https://picsum.photos/seed/prize3/600/400', caption: 'Merit Scholarship Distribution Ceremony', category: 'Prize Distribution' },
-  { id: 10, src: 'https://picsum.photos/seed/activity1/600/400', caption: 'Maths Olympiad Practice Session', category: 'Activities' },
-  { id: 11, src: 'https://picsum.photos/seed/activity2/600/400', caption: 'Debate Competition — English', category: 'Activities' },
-  { id: 12, src: 'https://picsum.photos/seed/activity3/600/400', caption: 'Group Study in Action', category: 'Activities' },
-  { id: 13, src: 'https://picsum.photos/seed/class4/600/400', caption: 'Chemistry Lab Demonstration', category: 'Classrooms' },
-  { id: 14, src: 'https://picsum.photos/seed/event4/600/400', caption: 'Republic Day Celebration 2024', category: 'Events' },
-  { id: 15, src: 'https://picsum.photos/seed/prize4/600/400', caption: 'ICSE Star Performers — 2023', category: 'Prize Distribution' },
-  { id: 16, src: 'https://picsum.photos/seed/activity4/600/400', caption: 'Career Counselling Workshop', category: 'Activities' },
-];
+// Auto-scans public/gallery/ at build time.
+// Drop any new image in that folder and restart the dev server — it appears automatically.
+const _keys = Object.keys(import.meta.glob('/public/gallery/*.{JPG,jpg,jpeg,JPEG,png,PNG,webp,WEBP}'));
+const photos = _keys.map(k => `/gallery/${k.split('/').pop()}`).sort();
 
 export default function Gallery() {
-  const [activeFilter, setActiveFilter] = useState('All');
   const [lightboxIndex, setLightboxIndex] = useState(null);
 
-  const filtered = images.filter(img => activeFilter === 'All' || img.category === activeFilter);
+  const isOpen = lightboxIndex !== null;
+  const open   = (i) => setLightboxIndex(i);
+  const close  = useCallback(() => setLightboxIndex(null), []);
+  const prev   = useCallback(() => setLightboxIndex(i => (i - 1 + photos.length) % photos.length), []);
+  const next   = useCallback(() => setLightboxIndex(i => (i + 1) % photos.length), []);
 
-  const openLightbox = (i) => setLightboxIndex(i);
-  const closeLightbox = () => setLightboxIndex(null);
-  const prev = () => setLightboxIndex(i => (i - 1 + filtered.length) % filtered.length);
-  const next = () => setLightboxIndex(i => (i + 1) % filtered.length);
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape')     close();
+      if (e.key === 'ArrowLeft')  prev();
+      if (e.key === 'ArrowRight') next();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isOpen, close, prev, next]);
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
 
   return (
     <>
       <Helmet>
-        <title>Gallery | Siddhi Coaching Classes Chembur</title>
-        <meta name="description" content="Photos from classrooms, events, prize distributions, and activities at Siddhi Coaching Classes Chembur." />
+        <title>Gallery | Siddhi's Coaching Classes Chembur</title>
+        <meta name="description" content="Photos from classrooms, events, and student life at Siddhi's Coaching Classes, Chembur, Mumbai." />
       </Helmet>
 
       {/* Hero */}
       <section className="bg-navy pt-32 pb-20 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 20px 20px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 text-center">
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="font-heading text-4xl md:text-5xl font-bold text-white mb-4 pt-4">
+          <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="inline-block bg-saffron/20 text-saffron text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full mb-4">
+            Life at Siddhi's
+          </motion.span>
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="font-heading text-4xl md:text-5xl font-bold text-white mb-4">
             Our Gallery
           </motion.h1>
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-white/70 text-lg max-w-xl mx-auto">
-            Glimpses of learning, laughter, and achievement at Siddhi.
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-white/70 text-lg max-w-2xl mx-auto">
+            Moments from classrooms, events, and student life — a glimpse into what makes Siddhi's special.
           </motion.p>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mt-6 inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-5 py-2 text-white/80 text-sm">
+            <Images size={15} />
+            {photos.length} photos
+          </motion.div>
         </div>
         <div className="absolute bottom-0 left-0 right-0">
           <svg viewBox="0 0 1440 60" className="w-full fill-cream" preserveAspectRatio="none">
@@ -61,74 +65,106 @@ export default function Gallery() {
         </div>
       </section>
 
-      <section className="py-16 bg-cream">
+      {/* Masonry Grid */}
+      <section className="py-14 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          {/* Filter */}
-          <div className="flex flex-wrap gap-2 justify-center mb-10">
-            {categories.map(c => (
-              <button
-                key={c}
-                onClick={() => setActiveFilter(c)}
-                className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${activeFilter === c ? 'bg-navy text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200 hover:border-navy hover:text-navy'}`}
-              >
-                {c}
-              </button>
-            ))}
-          </div>
-
-          {/* Grid */}
-          <motion.div layout className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            <AnimatePresence>
-              {filtered.map((img, i) => (
+          {photos.length === 0 ? (
+            <div className="text-center py-24 text-gray-400">
+              <Images size={48} className="mx-auto mb-4 opacity-30" />
+              <p className="font-heading font-semibold text-lg">No photos yet</p>
+              <p className="text-sm mt-1">Add images to <code>public/gallery/</code> to see them here.</p>
+            </div>
+          ) : (
+            <div style={{
+              columns: '2',
+              columnGap: '12px',
+            }}
+            className="[column-count:2] sm:[column-count:3] lg:[column-count:4]"
+            >
+              {photos.map((src, i) => (
                 <motion.div
-                  key={img.id}
-                  layout
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="group cursor-pointer rounded-xl overflow-hidden shadow-sm border border-gray-100 aspect-square relative"
-                  onClick={() => openLightbox(i)}
+                  key={src}
+                  className="mb-3 break-inside-avoid cursor-pointer rounded-xl overflow-hidden relative group shadow-sm"
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.4, delay: (i % 8) * 0.04 }}
+                  onClick={() => open(i)}
                 >
-                  <img src={img.src} alt={img.caption} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                  <div className="absolute inset-0 bg-navy/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                    <p className="text-white text-xs font-medium line-clamp-2">{img.caption}</p>
+                  <img
+                    src={src}
+                    alt={`Gallery photo ${i + 1}`}
+                    loading="lazy"
+                    className="w-full block transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-navy/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-3 scale-75 group-hover:scale-100 transition-transform duration-300">
+                      <ZoomIn size={22} className="text-white" />
+                    </div>
                   </div>
                 </motion.div>
               ))}
-            </AnimatePresence>
-          </motion.div>
+            </div>
+          )}
         </div>
       </section>
 
       {/* Lightbox */}
       <AnimatePresence>
-        {lightboxIndex !== null && (
+        {isOpen && (
           <motion.div
-            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={closeLightbox}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
+            onClick={close}
           >
-            <button onClick={closeLightbox} className="absolute top-4 right-4 text-white/80 hover:text-white p-2">
-              <X size={28} />
-            </button>
-            <button onClick={(e) => { e.stopPropagation(); prev(); }} className="absolute left-4 text-white/80 hover:text-white p-2">
-              <ChevronLeft size={36} />
-            </button>
-            <motion.div
-              key={lightboxIndex}
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              className="max-w-3xl w-full"
-              onClick={e => e.stopPropagation()}
+            {/* Counter */}
+            <div className="absolute top-5 left-1/2 -translate-x-1/2 text-white/50 text-sm font-medium tabular-nums pointer-events-none">
+              {lightboxIndex + 1} / {photos.length}
+            </div>
+
+            {/* Close */}
+            <button
+              onClick={close}
+              className="absolute top-4 right-4 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-2.5 transition-all z-10"
+              aria-label="Close"
             >
-              <img src={filtered[lightboxIndex]?.src} alt="" className="w-full rounded-xl max-h-[70vh] object-contain" />
-              <p className="text-white/80 text-sm text-center mt-3">{filtered[lightboxIndex]?.caption}</p>
-              <p className="text-white/40 text-xs text-center mt-1">{lightboxIndex + 1} / {filtered.length}</p>
-            </motion.div>
-            <button onClick={(e) => { e.stopPropagation(); next(); }} className="absolute right-4 text-white/80 hover:text-white p-2">
-              <ChevronRight size={36} />
+              <X size={20} />
+            </button>
+
+            {/* Prev */}
+            <button
+              onClick={(e) => { e.stopPropagation(); prev(); }}
+              className="absolute left-3 sm:left-6 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-3 transition-all z-10"
+              aria-label="Previous photo"
+            >
+              <ChevronLeft size={26} />
+            </button>
+
+            {/* Image */}
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={lightboxIndex}
+                src={photos[lightboxIndex]}
+                alt={`Gallery photo ${lightboxIndex + 1}`}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                className="max-h-[88vh] max-w-[82vw] object-contain rounded-lg shadow-2xl"
+                onClick={(e) => e.stopPropagation()}
+              />
+            </AnimatePresence>
+
+            {/* Next */}
+            <button
+              onClick={(e) => { e.stopPropagation(); next(); }}
+              className="absolute right-3 sm:right-6 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-3 transition-all z-10"
+              aria-label="Next photo"
+            >
+              <ChevronRight size={26} />
             </button>
           </motion.div>
         )}
