@@ -212,6 +212,44 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Our Facility */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <SectionHeader
+            label="Our Space"
+            heading="Take a Look Inside"
+            subtext="State-of-the-art digital classrooms designed for focused, distraction-free learning."
+          />
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="grid grid-cols-2 sm:grid-cols-3 gap-3"
+          >
+            {[
+              'WhatsApp Image 2026-05-21 at 5.32.25 PM.jpeg',
+              'WhatsApp Image 2026-05-21 at 5.32.26 PM.jpeg',
+              'WhatsApp Image 2026-05-21 at 5.32.26 PM (1).jpeg',
+              'WhatsApp Image 2026-05-21 at 5.32.26 PM (2).jpeg',
+              'WhatsApp Image 2026-05-21 at 5.32.27 PM.jpeg',
+            ].map((photo, i) => (
+              <motion.div
+                key={photo}
+                variants={fadeUp}
+                className={`rounded-2xl overflow-hidden shadow-sm border border-gray-100 aspect-video${i === 4 ? ' col-span-2 sm:col-span-1' : ''}`}
+              >
+                <img
+                  src={`/property/${encodeURIComponent(photo)}`}
+                  alt={`Classroom ${i + 1}`}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
       {/* Toppers Wall Preview */}
       <section className="py-20 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">

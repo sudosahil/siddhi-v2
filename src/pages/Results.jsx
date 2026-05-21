@@ -112,11 +112,8 @@ export default function Results() {
                       src={getTopperPhoto(r.name) || `https://ui-avatars.com/api/?name=${encodeURIComponent(r.name)}&background=E8951D&color=fff&size=200`}
                       alt={r.name}
                       onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(r.name)}&background=E8951D&color=fff&size=200`; }}
-                      className={`w-full h-full ${getTopperPhoto(r.name) ? 'object-contain' : 'object-cover'}`}
+                      className="w-full h-full object-contain"
                     />
-                    {r.highlight && (
-                      <span className="absolute top-2 right-2 w-5 h-5 bg-saffron rounded-full border-2 border-white shadow" />
-                    )}
                   </div>
                   {/* Info */}
                   <div className="p-4">

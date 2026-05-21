@@ -3,28 +3,31 @@ export const teachers = [
     id: 1,
     name: "Dr. Preeti M.K",
     subject: "Mathematics",
-    qualification: "M.Sc (Mathematics) & PhD (Mathematics)",
+    qualification: "PhD (Mathematics)",
     experience: "10 Years",
     section: "Science",
+    photo: "Dr Preeti MK.jpeg",
     highlight: "PhD in Mathematics with a decade of teaching experience"
   },
   {
     id: 2,
-    name: "Dr. Anand",
+    name: "Dr. Karan Anand",
     subject: "Biology / NEET",
     qualification: "MBBS — Sion Hospital, Mumbai",
     experience: "Practising Doctor",
     section: "Entrance",
+    photo: "Dr Karan Anand.jpeg",
     highlight: "Practising MBBS doctor from Sion Hospital brings real medical insight to NEET coaching"
   },
   {
     id: 3,
     name: "Prof. Shanaya Jha Tiwari",
     subject: "Business Studies / Commerce",
-    qualification: "B.Tech & MBA — IITian, Business Professional",
+    qualification: "B.Tech Chemical Engineering — IIT",
     experience: "Industry Professional",
     section: "Commerce",
-    highlight: "IITian with MBA — brings corporate and technical perspective to Commerce"
+    photo: "Prof Shanaya Jha Tiwari.jpeg",
+    highlight: "IITian Chemical Engineer — brings rigorous analytical thinking to Commerce"
   },
   {
     id: 4,
@@ -33,15 +36,17 @@ export const teachers = [
     qualification: "MBBS — KEM Hospital, Mumbai",
     experience: "Practising Doctor",
     section: "Entrance",
+    photo: "Dr Ankit G.jpeg",
     highlight: "Practising MBBS doctor from KEM Hospital, Mumbai"
   },
   {
     id: 5,
-    name: "Dr. Sana Rajesh Mane",
+    name: "Dr. Sana Mane",
     subject: "Biology / Science",
     qualification: "MBBS",
     experience: "Medical Professional",
     section: "Science",
+    photo: "Dr Sana Mane.jpeg",
     highlight: "MBBS doctor delivering concept-first Biology coaching"
   },
   {
@@ -86,12 +91,13 @@ export const teachers = [
     highlight: "Practising MBBS doctor from Sion Hospital, Mumbai — brings real clinical insight to NEET coaching"
   },
   {
-    id: 10,
-    name: "Prof. Tanmeet Kaur Sehgal",
-    subject: "Psychology / Student Counselling",
-    qualification: "MA Psychology (Clinical)",
-    experience: "Clinical Psychologist",
-    section: "Counselling",
-    highlight: "Clinical Psychologist providing student mental wellness and academic counselling"
-  }
+    id: 11,
+    name: "Prof. Kishor K",
+    subject: "Finance / Commerce",
+    qualification: "Masters in Finance",
+    experience: "Finance Professional",
+    section: "Commerce",
+    photo: "Prof Kishor K.jpeg",
+    highlight: "Masters in Finance — expert guidance for Commerce and finance subjects"
+  },
 ];
