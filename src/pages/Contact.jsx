@@ -5,7 +5,7 @@ import { MapPin, Phone, Mail, Clock, MessageCircle } from 'lucide-react';
 import SectionHeader from '../components/ui/SectionHeader';
 import { siteInfo } from '../data/siteInfo';
 
-const WA_NUMBER = '919594345743';
+const WA_NUMBER = '917208476547';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', phone: '', message: '' });

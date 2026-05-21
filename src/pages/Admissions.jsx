@@ -5,7 +5,7 @@ import { ChevronDown, Download } from 'lucide-react';
 import SectionHeader from '../components/ui/SectionHeader';
 import { faqs } from '../data/faq';
 
-const WA_NUMBER = '919594345743';
+const WA_NUMBER = '917208476547';
 
 const steps = [
   { step: '01', title: 'Enquire', desc: 'Call us, WhatsApp us, or fill the form below. We will call you back within 2 hours.' },

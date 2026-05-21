@@ -464,7 +464,7 @@ export default function Home() {
                 </div>
                 <div>
                   <div className="font-heading font-semibold text-navy">WhatsApp</div>
-                  <a href="https://wa.me/919594345743" target="_blank" rel="noopener noreferrer" className="text-gray-600 text-sm hover:text-[#25D366] transition-colors">Chat with us</a>
+                  <a href="https://wa.me/917208476547" target="_blank" rel="noopener noreferrer" className="text-gray-600 text-sm hover:text-[#25D366] transition-colors">Chat with us</a>
                 </div>
               </div>
               <div className="mt-4 p-4 bg-saffron/10 rounded-xl border border-saffron/20">

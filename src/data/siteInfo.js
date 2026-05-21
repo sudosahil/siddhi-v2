@@ -5,7 +5,7 @@ export const siteInfo = {
   phone1: "9594345743",
   phone2: "7208476547",
   phoneDisplay: "9594345743 / 7208476547",
-  whatsapp: "919594345743",
+  whatsapp: "917208476547",
   whatsappMessage: "Hi, I would like to enquire about admission at Siddhi's Coaching Classes.",
   email: "info@siddhiscoachingclasses.in",
   instagram: "https://www.instagram.com/siddhiscoachingclasses",

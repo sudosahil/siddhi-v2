@@ -102,7 +102,7 @@ export default function Teachers() {
           <h2 className="font-heading font-bold text-2xl text-navy mb-3">Want to Learn From Our Teachers?</h2>
           <p className="text-gray-600 mb-6">Book a free demo lecture and experience our teaching firsthand — no commitment required.</p>
           <a
-            href="https://wa.me/919594345743?text=Hi%2C%20I%20would%20like%20to%20book%20a%20free%20demo%20lecture."
+            href="https://wa.me/917208476547?text=Hi%2C%20I%20would%20like%20to%20book%20a%20free%20demo%20lecture."
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-saffron text-white font-heading font-semibold px-8 py-3 rounded-full hover:bg-amber-600 transition-colors"

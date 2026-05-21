@@ -7,7 +7,7 @@ import { courses } from '../data/courses';
 
 const filters = ['All', 'School', 'Science', 'Commerce', 'Entrance'];
 
-const WA_NUMBER = '919594345743';
+const WA_NUMBER = '917208476547';
 function enquireWA(courseName) {
   const msg = encodeURIComponent(`Hi, I would like to enquire about the ${courseName} course at Siddhi's Coaching Classes.`);
   window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
