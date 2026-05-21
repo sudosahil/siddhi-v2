@@ -50,7 +50,7 @@ export default function TopperCarousel({ toppers }) {
       onMouseLeave={() => setPaused(false)}
     >
       {/* Card stack */}
-      <div className="relative w-80">
+      <div className="relative w-full max-w-xs sm:max-w-sm">
         {/* Stacked background cards */}
         <div className="absolute inset-2 bg-white/25 rounded-[2rem] rotate-6 scale-95" />
         <div className="absolute inset-1 bg-white/45 rounded-[2rem] -rotate-3 scale-[0.97]" />

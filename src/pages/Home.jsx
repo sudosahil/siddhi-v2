@@ -52,7 +52,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy/95 to-[#0d1a30]" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <motion.div
               variants={stagger}
               initial="hidden"
@@ -99,7 +99,7 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="hidden lg:flex lg:justify-center"
+              className="flex justify-center"
             >
               <TopperCarousel toppers={latestToppers} />
             </motion.div>
@@ -122,7 +122,7 @@ export default function Home() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true }}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-6"
+            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6"
           >
             {stats.map((s, i) => (
               <motion.div

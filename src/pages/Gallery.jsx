@@ -158,7 +158,7 @@ export default function Gallery() {
                     <p className="text-sm mt-1">Add images to <code>public/gallery/</code> and run <code>npm run compress-gallery</code>.</p>
                   </div>
                 ) : (
-                  <div style={{ columns: '2', columnGap: '12px' }} className="[column-count:2] sm:[column-count:3] lg:[column-count:4]">
+                  <div style={{ columnGap: '12px' }} className="columns-2 sm:columns-3 lg:columns-4">
                     {manifest.map((photo, i) => (
                       <GalleryPhoto key={photo.file} photo={photo} index={i} onClick={() => open(i)} />
                     ))}
