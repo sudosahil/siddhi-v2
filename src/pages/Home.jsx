@@ -1,7 +1,8 @@
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
-import { ChevronRight, Star, MapPin, Phone, MessageCircle, Download } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Star, MapPin, Phone, MessageCircle, Download } from 'lucide-react';
 import SectionHeader from '../components/ui/SectionHeader';
 import AnimatedCounter from '../components/ui/AnimatedCounter';
 import DemoButton from '../components/ui/DemoButton';
@@ -33,7 +34,13 @@ const whyUs = [
 
 export default function Home() {
   const topperPreview = latestToppers.slice(0, 5);
-  const teacherPreview = teachers.slice(0, 3);
+  const teacherPreview = teachers;
+  const teacherScrollRef = useRef(null);
+  const scrollTeachers = (dir) => {
+    if (teacherScrollRef.current) {
+      teacherScrollRef.current.scrollBy({ left: dir * 300, behavior: 'smooth' });
+    }
+  };
   const testimonialPreview = testimonials.slice(0, 3);
 
   return (
@@ -228,22 +235,25 @@ export default function Home() {
             className="grid grid-cols-2 sm:grid-cols-3 gap-3"
           >
             {[
-              'WhatsApp Image 2026-05-21 at 5.32.25 PM.jpeg',
-              'WhatsApp Image 2026-05-21 at 5.32.26 PM.jpeg',
-              'WhatsApp Image 2026-05-21 at 5.32.26 PM (1).jpeg',
-              'WhatsApp Image 2026-05-21 at 5.32.26 PM (2).jpeg',
-              'WhatsApp Image 2026-05-21 at 5.32.27 PM.jpeg',
+              { file: 'WhatsApp Image 2026-05-21 at 5.32.25 PM.jpeg', label: 'Classroom 1' },
+              { file: 'WhatsApp Image 2026-05-21 at 5.32.26 PM.jpeg', label: 'Classroom 2' },
+              { file: 'WhatsApp Image 2026-05-21 at 5.32.26 PM (1).jpeg', label: 'Classroom 3' },
+              { file: 'WhatsApp Image 2026-05-21 at 5.32.26 PM (2).jpeg', label: 'CCTV Camera' },
+              { file: 'WhatsApp Image 2026-05-21 at 5.32.27 PM.jpeg', label: 'Entrance' },
             ].map((photo, i) => (
               <motion.div
-                key={photo}
+                key={photo.file}
                 variants={fadeUp}
-                className={`rounded-2xl overflow-hidden shadow-sm border border-gray-100 aspect-video${i === 4 ? ' col-span-2 sm:col-span-1' : ''}`}
+                className={`rounded-2xl overflow-hidden shadow-sm border border-gray-100 aspect-video relative group${i === 4 ? ' col-span-2 sm:col-span-1' : ''}`}
               >
                 <img
-                  src={`/property/${encodeURIComponent(photo)}`}
-                  alt={`Classroom ${i + 1}`}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  src={`/property/${encodeURIComponent(photo.file)}`}
+                  alt={photo.label}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-navy/70 to-transparent px-3 py-2">
+                  <span className="text-white text-xs font-semibold">{photo.label}</span>
+                </div>
               </motion.div>
             ))}
           </motion.div>
@@ -258,16 +268,16 @@ export default function Home() {
             heading="Our Proud Toppers"
             subtext="Year after year, Siddhi students top their boards. Here are our 2024 stars."
           />
-          <div className="flex gap-5 overflow-x-auto pb-4 scrollbar-hide">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
             {topperPreview.map((t, i) => (
               <motion.div
                 key={t.filename}
-                initial={{ opacity: 0, x: 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
                 whileHover={{ scale: 1.02 }}
-                className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex-shrink-0 w-44 text-center"
+                className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 text-center"
               >
                 <div className="w-full aspect-square bg-gray-50">
                   <img
@@ -301,32 +311,57 @@ export default function Home() {
             heading="Learn from the Best"
             subtext="Our teachers are not just qualified — they are passionate educators who know how to make concepts stick."
           />
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-6"
+          <div className="flex justify-end gap-2 -mt-6 mb-4">
+            <button
+              onClick={() => scrollTeachers(-1)}
+              className="w-10 h-10 rounded-full bg-navy/5 hover:bg-navy hover:text-white text-navy border border-gray-200 flex items-center justify-center transition-all"
+              aria-label="Previous"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button
+              onClick={() => scrollTeachers(1)}
+              className="w-10 h-10 rounded-full bg-navy/5 hover:bg-navy hover:text-white text-navy border border-gray-200 flex items-center justify-center transition-all"
+              aria-label="Next"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+
+          <div
+            ref={teacherScrollRef}
+            className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide"
+            style={{ scrollSnapType: 'x mandatory' }}
           >
             {teacherPreview.map(t => (
-              <motion.div
+              <div
                 key={t.id}
-                variants={fadeUp}
-                className="bg-cream rounded-2xl p-6 text-center border border-gray-100 shadow-sm hover:-translate-y-1 hover:shadow-md transition-all duration-200"
+                className="bg-cream rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:-translate-y-1 hover:shadow-md transition-all duration-200 shrink-0 w-52"
+                style={{ scrollSnapAlign: 'start' }}
               >
-                <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=1B2A4A&color=fff&size=200`} alt={t.name} className="w-20 h-20 rounded-full mx-auto mb-4 object-cover" />
-                <h3 className="font-heading font-semibold text-navy">{t.name}</h3>
-                <p className="text-saffron text-sm font-medium mt-0.5">{t.subject}</p>
-                <p className="text-gray-400 text-xs mt-1">{t.qualification}</p>
-                <div className="flex justify-center gap-3 mt-3">
-                  <span className="text-xs bg-navy/5 text-navy rounded-full px-3 py-1">{t.experience}</span>
+                <div className="w-full bg-gray-100">
+                  <img
+                    src={t.photo ? `/teachers/${t.photo}` : `https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=1B2A4A&color=fff&size=400`}
+                    alt={t.name}
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=1B2A4A&color=fff&size=400`; }}
+                    className="w-full h-auto block"
+                  />
                 </div>
-              </motion.div>
+                <div className="p-4 text-center">
+                  <h3 className="font-heading font-semibold text-navy text-sm">{t.name}</h3>
+                  <p className="text-saffron text-xs font-medium mt-0.5">{t.subject}</p>
+                  <p className="text-gray-400 text-xs mt-1">{t.qualification}</p>
+                  <div className="flex justify-center mt-3">
+                    <span className="text-xs bg-navy/5 text-navy rounded-full px-3 py-1">{t.experience}</span>
+                  </div>
+                </div>
+              </div>
             ))}
-          </motion.div>
-          <div className="text-center mt-8">
-            <Link to="/teachers" className="inline-flex items-center gap-2 text-navy font-heading font-semibold hover:text-saffron transition-colors">
-              Meet All Teachers <ChevronRight size={18} />
+          </div>
+
+          <div className="text-center mt-10">
+            <Link to="/teachers" className="inline-flex items-center gap-2 bg-navy text-white font-heading font-semibold px-8 py-3 rounded-full hover:bg-navy/90 transition-colors group">
+              Meet All Teachers <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </div>
@@ -402,8 +437,8 @@ export default function Home() {
             ))}
           </motion.div>
           <div className="text-center mt-8">
-            <Link to="/schedule" className="inline-flex items-center gap-2 bg-navy text-white font-heading font-semibold px-8 py-3 rounded-full hover:bg-navy/90 transition-colors">
-              See Full Schedule <ChevronRight size={18} />
+            <Link to="/admissions" className="inline-flex items-center gap-2 bg-navy text-white font-heading font-semibold px-8 py-3 rounded-full hover:bg-navy/90 transition-colors">
+              Enquire About Admissions <ChevronRight size={18} />
             </Link>
           </div>
         </div>

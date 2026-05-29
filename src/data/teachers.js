@@ -14,10 +14,10 @@ export const teachers = [
     name: "Dr. Karan Anand",
     subject: "Biology / NEET",
     qualification: "MBBS — Sion Hospital, Mumbai",
-    experience: "Practising Doctor",
+    experience: "MBBS Doctor",
     section: "Entrance",
     photo: "Dr Karan Anand.jpeg",
-    highlight: "Practising MBBS doctor from Sion Hospital brings real medical insight to NEET coaching"
+    highlight: "MBBS doctor from Sion Hospital brings real medical insight to NEET coaching"
   },
   {
     id: 3,
@@ -34,10 +34,10 @@ export const teachers = [
     name: "Dr. Ankit G",
     subject: "Biology / NEET",
     qualification: "MBBS — KEM Hospital, Mumbai",
-    experience: "Practising Doctor",
+    experience: "MBBS Doctor",
     section: "Entrance",
     photo: "Dr Ankit G.jpeg",
-    highlight: "Practising MBBS doctor from KEM Hospital, Mumbai"
+    highlight: "MBBS doctor from KEM Hospital, Mumbai"
   },
   {
     id: 5,
@@ -54,10 +54,10 @@ export const teachers = [
     name: "CA Yogesh T",
     subject: "Accounts / CA Foundation",
     qualification: "Chartered Accountant (CA)",
-    experience: "Practising CA",
+    experience: "Chartered Accountant",
     section: "Commerce",
     photo: "Yogesh T.jpeg",
-    highlight: "Qualified CA teaching Accounts and CA Foundation with real-world practice knowledge"
+    highlight: "Qualified CA teaching Accounts and CA Foundation with deep professional knowledge"
   },
   {
     id: 7,
@@ -75,7 +75,7 @@ export const teachers = [
     name: "CS Dimple D",
     subject: "Company Secretary / Commerce Law",
     qualification: "Company Secretary (CS)",
-    experience: "Practising CS",
+    experience: "Company Secretary",
     section: "Commerce",
     photo: "CS Dimple D.jpeg",
     highlight: "Qualified Company Secretary — unique expertise in Commerce legal subjects"
@@ -85,10 +85,10 @@ export const teachers = [
     name: "Dr. Pranav P",
     subject: "Biology / NEET",
     qualification: "MBBS — Sion Hospital, Mumbai",
-    experience: "Practising Doctor",
+    experience: "MBBS Doctor",
     section: "Entrance",
     photo: "Dr Pranav P.jpeg",
-    highlight: "Practising MBBS doctor from Sion Hospital, Mumbai — brings real clinical insight to NEET coaching"
+    highlight: "MBBS doctor from Sion Hospital, Mumbai — brings real clinical insight to NEET coaching"
   },
   {
     id: 11,

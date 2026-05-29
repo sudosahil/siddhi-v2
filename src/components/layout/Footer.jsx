@@ -9,7 +9,6 @@ const quickLinks = [
   { label: 'Teachers', to: '/teachers' },
   { label: 'About Us', to: '/about' },
   { label: 'Admissions', to: '/admissions' },
-  { label: 'Schedule', to: '/schedule' },
   { label: 'Gallery', to: '/gallery' },
   { label: 'Contact', to: '/contact' },
 ];

@@ -5,12 +5,16 @@ import { GraduationCap } from 'lucide-react';
 import SectionHeader from '../components/ui/SectionHeader';
 import { teachers } from '../data/teachers';
 
-const filters = ['All', 'Science', 'Commerce', 'Entrance', 'Counselling'];
+const filters = ['All', 'Science', 'Commerce', 'Entrance'];
 
 export default function Teachers() {
   const [active, setActive] = useState('All');
 
-  const filtered = teachers.filter(t => active === 'All' || t.section === active);
+  const filtered = teachers.filter(t =>
+    active === 'All' ||
+    t.section === active ||
+    (active === 'Entrance' && t.section === 'Science')
+  );
 
   return (
     <>

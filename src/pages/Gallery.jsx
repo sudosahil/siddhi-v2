@@ -5,12 +5,15 @@ import { X, ChevronLeft, ChevronRight, ZoomIn, Images } from 'lucide-react';
 import manifest from '../data/gallery-manifest.json';
 
 const campusPhotos = [
-  'WhatsApp Image 2026-05-21 at 5.32.25 PM.jpeg',
-  'WhatsApp Image 2026-05-21 at 5.32.26 PM.jpeg',
-  'WhatsApp Image 2026-05-21 at 5.32.26 PM (1).jpeg',
-  'WhatsApp Image 2026-05-21 at 5.32.26 PM (2).jpeg',
-  'WhatsApp Image 2026-05-21 at 5.32.27 PM.jpeg',
+  { file: 'WhatsApp Image 2026-05-21 at 5.32.25 PM.jpeg', label: 'Classroom 1' },
+  { file: 'WhatsApp Image 2026-05-21 at 5.32.26 PM.jpeg', label: 'Classroom 2' },
+  { file: 'WhatsApp Image 2026-05-21 at 5.32.26 PM (1).jpeg', label: 'Classroom 3' },
+  { file: 'WhatsApp Image 2026-05-21 at 5.32.26 PM (2).jpeg', label: 'CCTV Camera' },
+  { file: 'WhatsApp Image 2026-05-21 at 5.32.27 PM.jpeg', label: 'Entrance' },
 ];
+
+const picnicPhotos = [];
+
 
 function GalleryPhoto({ photo, index, onClick }) {
   const [loaded, setLoaded] = useState(false);
@@ -70,8 +73,8 @@ export default function Gallery() {
   const isCampusOpen = campusIndex !== null;
   const openCampus   = (i) => setCampusIndex(i);
   const closeCampus  = useCallback(() => setCampusIndex(null), []);
-  const prevCampus   = useCallback(() => setCampusIndex(i => (i - 1 + campusPhotos.length) % campusPhotos.length), []);
-  const nextCampus   = useCallback(() => setCampusIndex(i => (i + 1) % campusPhotos.length), []);
+  const prevCampus   = useCallback(() => setCampusIndex(i => (i - 1 + campusPhotos.length) % campusPhotos.length), [campusPhotos.length]);
+  const nextCampus   = useCallback(() => setCampusIndex(i => (i + 1) % campusPhotos.length), [campusPhotos.length]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -136,8 +139,8 @@ export default function Gallery() {
       <section className="py-14 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           {/* Tab switcher */}
-          <div className="flex gap-2 mb-10 justify-center">
-            {[['events', 'Events & Moments'], ['campus', 'Our Campus']].map(([key, label]) => (
+          <div className="flex flex-wrap gap-2 mb-10 justify-center">
+            {[['events', 'Events & Moments'], ['campus', 'Our Campus'], ['picnic', 'Picnic']].map(([key, label]) => (
               <button
                 key={key}
                 onClick={() => setTab(key)}
@@ -165,13 +168,13 @@ export default function Gallery() {
                   </div>
                 )}
               </motion.div>
-            ) : (
+            ) : tab === 'campus' ? (
               <motion.div key="campus" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
               >
                 {campusPhotos.map((photo, i) => (
                   <motion.div
-                    key={photo}
+                    key={photo.file}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.07 }}
@@ -179,17 +182,48 @@ export default function Gallery() {
                     onClick={() => openCampus(i)}
                   >
                     <img
-                      src={`/property/${encodeURIComponent(photo)}`}
-                      alt={`Classroom ${i + 1}`}
+                      src={`/property/${encodeURIComponent(photo.file)}`}
+                      alt={photo.label}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-navy/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-navy/70 to-transparent px-4 py-3">
+                      <span className="text-white text-sm font-semibold">{photo.label}</span>
+                    </div>
+                    <div className="absolute inset-0 bg-navy/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                       <div className="bg-white/20 backdrop-blur-sm rounded-full p-3 scale-75 group-hover:scale-100 transition-transform duration-300">
                         <ZoomIn size={22} className="text-white" />
                       </div>
                     </div>
                   </motion.div>
                 ))}
+              </motion.div>
+            ) : (
+              <motion.div key="picnic" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                {picnicPhotos.length === 0 ? (
+                  <div className="text-center py-24 text-gray-400">
+                    <Images size={48} className="mx-auto mb-4 opacity-30" />
+                    <p className="font-heading font-semibold text-lg">Coming Soon</p>
+                    <p className="text-sm mt-1">Picnic photos will appear here.</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {picnicPhotos.map((photo, i) => (
+                      <motion.div
+                        key={photo}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.07 }}
+                        className="rounded-xl overflow-hidden shadow-sm aspect-video relative group border border-gray-100"
+                      >
+                        <img
+                          src={`/picnic/${encodeURIComponent(photo)}`}
+                          alt={`Picnic ${i + 1}`}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </motion.div>
+                    ))}
+                  </div>
+                )}
               </motion.div>
             )}
           </AnimatePresence>
@@ -219,8 +253,8 @@ export default function Gallery() {
             <AnimatePresence mode="wait">
               <motion.img
                 key={campusIndex}
-                src={`/property/${encodeURIComponent(campusPhotos[campusIndex])}`}
-                alt={`Classroom ${campusIndex + 1}`}
+                src={`/property/${encodeURIComponent(campusPhotos[campusIndex].file)}`}
+                alt={campusPhotos[campusIndex].label}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
