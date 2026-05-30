@@ -15,7 +15,7 @@ export const teachers = [
     subject: "Biology / NEET",
     qualification: "MBBS — Sion Hospital, Mumbai",
     experience: "MBBS Doctor",
-    section: "Entrance",
+    section: "Science",
     photo: "Dr Karan Anand.jpeg",
     highlight: "MBBS doctor from Sion Hospital brings real medical insight to NEET coaching"
   },
@@ -25,7 +25,7 @@ export const teachers = [
     subject: "Business Studies / Commerce",
     qualification: "B.Tech Chemical Engineering — IIT",
     experience: "Industry Professional",
-    section: "Commerce",
+    section: "Science",
     photo: "Prof Shanaya Jha Tiwari.jpeg",
     highlight: "IITian Chemical Engineer — brings rigorous analytical thinking to Commerce"
   },
@@ -35,7 +35,7 @@ export const teachers = [
     subject: "Biology / NEET",
     qualification: "MBBS — KEM Hospital, Mumbai",
     experience: "MBBS Doctor",
-    section: "Entrance",
+    section: "Science",
     photo: "Dr Ankit G.jpeg",
     highlight: "MBBS doctor from KEM Hospital, Mumbai"
   },
@@ -86,7 +86,7 @@ export const teachers = [
     subject: "Biology / NEET",
     qualification: "MBBS — Sion Hospital, Mumbai",
     experience: "MBBS Doctor",
-    section: "Entrance",
+    section: "Science",
     photo: "Dr Pranav P.jpeg",
     highlight: "MBBS doctor from Sion Hospital, Mumbai — brings real clinical insight to NEET coaching"
   },
