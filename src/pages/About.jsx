@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import { motion } from 'framer-motion';
 import SectionHeader from '../components/ui/SectionHeader';
 import DemoButton from '../components/ui/DemoButton';
@@ -26,10 +26,11 @@ const fadeUp = { hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0, transi
 export default function About() {
   return (
     <>
-      <Helmet>
-        <title>About Us | Siddhi Coaching Classes Chembur — Our Story & Mission</title>
-        <meta name="description" content="Learn the story of Siddhi's Coaching Classes — founded in 2003 in Chembur, Mumbai, with a mission to provide quality education with personal attention." />
-      </Helmet>
+      <Seo
+        title="About Us | Trusted Coaching Classes in Chembur Since 2003 — Siddhi's Coaching Classes"
+        description="Founded in 2003, Siddhi's Coaching Classes has grown into one of the best coaching classes in Chembur with two centres on Shell Colony Road — SSC, HSC, NEET, JEE, MH-CET & CA Foundation."
+        path="/about"
+      />
 
       {/* Hero */}
       <section className="bg-navy pt-32 pb-20 relative overflow-hidden">

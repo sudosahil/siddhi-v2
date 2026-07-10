@@ -23,6 +23,7 @@ export default function AdminLogin() {
     <>
       <Helmet>
         <title>Admin Login | Siddhi Coaching Classes</title>
+        <meta name="robots" content="noindex,nofollow" />
       </Helmet>
       <div className="min-h-screen flex items-center justify-center bg-cream px-4 pt-24 pb-12">
         <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 border border-gray-100">

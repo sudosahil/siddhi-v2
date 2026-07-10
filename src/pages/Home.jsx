@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
+import { ORG_SCHEMA } from '../data/seo';
 import { motion } from 'framer-motion';
 import { ChevronRight, ChevronLeft, Star, MapPin, Phone, MessageCircle, Download } from 'lucide-react';
 import SectionHeader from '../components/ui/SectionHeader';
@@ -45,10 +46,12 @@ export default function Home() {
 
   return (
     <>
-      <Helmet>
-        <title>Siddhi's Coaching Classes Chembur | SSC HSC MH-CET NEET JEE CA Foundation Chembur Mumbai</title>
-        <meta name="description" content="Siddhi's Coaching Classes in Chembur, Mumbai — trusted since 2003 for SSC, HSC Science & Commerce, MH-CET, NEET, JEE, and CA Foundation. Expert faculty, proven results." />
-      </Helmet>
+      <Seo
+        title="Best Coaching Classes in Chembur | SSC, HSC, NEET, JEE, MH-CET — Siddhi's Coaching Classes"
+        description="Siddhi's Coaching Classes — the best coaching class in Chembur since 2003. SSC (Class 8–10), HSC Science & Commerce, MH-CET, NEET, JEE & CA Foundation at Shell Colony, near Chembur station. Free demo lecture."
+        path="/"
+        jsonLd={ORG_SCHEMA}
+      />
 
       {/* Hero */}
       <section className="relative min-h-screen flex items-center overflow-hidden bg-navy">
@@ -512,6 +515,37 @@ export default function Home() {
               </div>
               <DemoButton size="lg" />
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Local SEO content */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <h2 className="font-heading text-2xl md:text-3xl font-bold text-navy mb-6">
+            Chembur's Best Coaching Classes for SSC, HSC &amp; Entrance Exams
+          </h2>
+          <div className="space-y-4 text-gray-600 text-sm md:text-base leading-relaxed">
+            <p>
+              Looking for the best coaching class in Chembur? Since 2003, Siddhi's Coaching Classes has helped
+              students from Shell Colony, Sahakar Nagar, Chembur East, Chembur Colony, Tilak Nagar, Govandi and
+              Deonar score top marks in their board and entrance exams. Our two centres on Shell Colony Road are a
+              5-minute walk from Chembur railway station and 3 minutes from the Chembur monorail station.
+            </p>
+            <p>
+              We offer <Link to="/courses" className="text-saffron font-medium hover:underline">tuition for Class 8, 9 and 10 (SSC Board)</Link>,
+              HSC Science coaching for 11th and 12th with dedicated <Link to="/courses" className="text-saffron font-medium hover:underline">MH-CET, NEET and JEE Main batches</Link>,
+              HSC Commerce coaching, and CA Foundation classes taught by a practising Chartered Accountant. Every
+              subject is taught by a specialist — PhD holders, MBBS doctors from Sion and KEM hospitals, a Company
+              Secretary and an IITian.
+            </p>
+            <p>
+              Students join us from schools across Chembur including Adarsha Vidyalaya, Swami Vivekanand High School,
+              Our Lady of Perpetual Succour, St. Anthony's, OLPS and SIES. In SSC 2024-25, 13 of our 60 students
+              scored above 90% — see our <Link to="/results" className="text-saffron font-medium hover:underline">full results</Link> or{' '}
+              <Link to="/admissions" className="text-saffron font-medium hover:underline">book a free demo lecture</Link> to
+              experience why parents call us the best tuition classes in Chembur.
+            </p>
           </div>
         </div>
       </section>

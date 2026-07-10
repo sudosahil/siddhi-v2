@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, MessageCircle } from 'lucide-react';
 import SectionHeader from '../components/ui/SectionHeader';
@@ -38,10 +38,11 @@ export default function Contact() {
 
   return (
     <>
-      <Helmet>
-        <title>Contact Us | Siddhi Coaching Classes Chembur Mumbai</title>
-        <meta name="description" content="Contact Siddhi Coaching Classes in Chembur, Mumbai. Call us, WhatsApp us, or fill in the form. We are located near Chembur Station." />
-      </Helmet>
+      <Seo
+        title="Contact Us | Coaching Classes in Shell Colony, Chembur — Siddhi's Coaching Classes"
+        description="Visit Siddhi's Coaching Classes at Shell Colony, Chembur, Mumbai 400071 — 5 minutes from Chembur station. Call 9594345743 or WhatsApp us to book a free demo class."
+        path="/contact"
+      />
 
       {/* Hero */}
       <section className="bg-navy pt-32 pb-20 relative overflow-hidden">

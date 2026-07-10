@@ -1,6 +1,5 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { HelmetProvider } from 'react-helmet-async';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import WhatsAppButton from './components/ui/WhatsAppButton';
@@ -41,7 +40,7 @@ export default function App() {
   const location = useLocation();
 
   return (
-    <HelmetProvider>
+    <>
       <ScrollToTop />
       <Navbar />
       <main>
@@ -64,6 +63,6 @@ export default function App() {
       </main>
       <Footer />
       <WhatsAppButton />
-    </HelmetProvider>
+    </>
   );
 }

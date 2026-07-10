@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import { motion } from 'framer-motion';
 import { ChevronDown, Download } from 'lucide-react';
 import SectionHeader from '../components/ui/SectionHeader';
@@ -77,10 +77,20 @@ export default function Admissions() {
 
   return (
     <>
-      <Helmet>
-        <title>Admissions | Join Siddhi Coaching Classes Chembur</title>
-        <meta name="description" content="Admission process, fee structure, and inquiry form for Siddhi Coaching Classes Chembur. Book a free demo class today." />
-      </Helmet>
+      <Seo
+        title="Admissions Open | Best Coaching Classes in Chembur — Free Demo Lecture | Siddhi's"
+        description="Join the best coaching class in Chembur — simple 3-step admission, transparent fees and a free demo lecture for SSC, HSC Science & Commerce, NEET, JEE and MH-CET batches. Limited seats."
+        path="/admissions"
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: faqs.map(f => ({
+            '@type': 'Question',
+            name: f.q,
+            acceptedAnswer: { '@type': 'Answer', text: f.a },
+          })),
+        }}
+      />
 
       {/* Hero */}
       <section className="bg-navy pt-32 pb-20 relative overflow-hidden">

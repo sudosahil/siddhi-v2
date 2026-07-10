@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GraduationCap } from 'lucide-react';
 import SectionHeader from '../components/ui/SectionHeader';
@@ -18,10 +18,11 @@ export default function Teachers() {
 
   return (
     <>
-      <Helmet>
-        <title>Our Teachers | Expert Faculty — Siddhi's Coaching Classes Chembur</title>
-        <meta name="description" content="Meet the experienced faculty at Siddhi's Coaching Classes Chembur. Subject experts including PhD holders, MBBS doctors, CA, CS, and IITians." />
-      </Helmet>
+      <Seo
+        title="Our Teachers | Best Coaching Faculty in Chembur — PhD, MBBS, CA & IITian | Siddhi's"
+        description="Learn from Chembur's best coaching faculty — PhD holders, MBBS doctors from Sion & KEM hospitals, a Chartered Accountant, a Company Secretary and an IITian. Experts for SSC, HSC, NEET, JEE & MH-CET."
+        path="/teachers"
+      />
 
       {/* Hero */}
       <section className="bg-navy pt-32 pb-20 relative overflow-hidden">

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import { motion } from 'framer-motion';
 import { Download } from 'lucide-react';
 import SectionHeader from '../components/ui/SectionHeader';
@@ -18,10 +18,11 @@ export default function Schedule() {
 
   return (
     <>
-      <Helmet>
-        <title>Batch Schedule & Timetable | Siddhi Coaching Classes Chembur</title>
-        <meta name="description" content="View morning, afternoon, and evening batch schedules at Siddhi Coaching Classes Chembur. Find the right time slot for your child." />
-      </Helmet>
+      <Seo
+        title="Batch Timings & Schedule | Coaching Classes in Chembur — Siddhi's Coaching Classes"
+        description="Morning (6:30 AM), afternoon and evening tuition batches for Class 8–12 and entrance coaching in Chembur. Flexible timings that fit every school schedule. Download the timetable."
+        path="/schedule"
+      />
 
       {/* Hero */}
       <section className="bg-navy pt-32 pb-20 relative overflow-hidden">

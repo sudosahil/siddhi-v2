@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
+import { SITE_URL } from '../data/seo';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Clock, Users, BookOpen, MessageCircle } from 'lucide-react';
 import SectionHeader from '../components/ui/SectionHeader';
@@ -21,10 +22,30 @@ export default function Courses() {
 
   return (
     <>
-      <Helmet>
-        <title>Coaching Courses in Chembur | SSC HSC JEE NEET MH-CET Classes — Siddhi's Coaching Classes</title>
-        <meta name="description" content="Explore coaching programs at Siddhi's Coaching Classes Chembur — SSC Board, HSC Science & Commerce, MH-CET, JEE, NEET, CA Foundation." />
-      </Helmet>
+      <Seo
+        title="Courses | Best SSC, HSC, NEET, JEE & MH-CET Coaching in Chembur — Siddhi's Coaching Classes"
+        description="Class 8–10 SSC tuition, HSC Science & Commerce coaching for 11th–12th, NEET, JEE Main, MH-CET & CA Foundation classes in Chembur, Mumbai. Regular and crash batches. Book a free demo lecture."
+        path="/courses"
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'ItemList',
+          itemListElement: courses.map((c, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            item: {
+              '@type': 'Course',
+              name: `${c.title} — Coaching in Chembur`,
+              description: `${c.highlight}. Subjects: ${c.subjects.join(', ')}. ${c.classes}, ${c.board} board.`,
+              provider: { '@id': `${SITE_URL}/#organization` },
+              hasCourseInstance: {
+                '@type': 'CourseInstance',
+                courseMode: 'onsite',
+                location: { '@type': 'Place', name: 'Shell Colony, Chembur, Mumbai 400071' },
+              },
+            },
+          })),
+        }}
+      />
 
       {/* Hero */}
       <section className="bg-navy pt-32 pb-20 relative overflow-hidden">

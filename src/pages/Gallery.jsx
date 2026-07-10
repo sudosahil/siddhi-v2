@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, ZoomIn, Images } from 'lucide-react';
 import manifest from '../data/gallery-manifest.json';
@@ -105,10 +105,11 @@ export default function Gallery() {
 
   return (
     <>
-      <Helmet>
-        <title>Gallery | Siddhi's Coaching Classes Chembur</title>
-        <meta name="description" content="Photos from classrooms, events, and student life at Siddhi's Coaching Classes, Chembur, Mumbai." />
-      </Helmet>
+      <Seo
+        title="Gallery | Digital Classrooms & Student Life — Siddhi's Coaching Classes Chembur"
+        description="Take a look inside one of the best coaching classes in Chembur — digital classrooms, toppers' felicitations, events and student life at our Shell Colony centres."
+        path="/gallery"
+      />
 
       {/* Hero */}
       <section className="bg-navy pt-32 pb-20 relative overflow-hidden">

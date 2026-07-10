@@ -83,6 +83,7 @@ export default function AdminDashboard() {
     <>
       <Helmet>
         <title>Admin Dashboard | Siddhi Coaching</title>
+        <meta name="robots" content="noindex,nofollow" />
       </Helmet>
 
       <div className="min-h-screen bg-cream pt-28 pb-20">

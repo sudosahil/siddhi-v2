@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionHeader from '../components/ui/SectionHeader';
 import AnimatedCounter from '../components/ui/AnimatedCounter';
@@ -19,10 +19,11 @@ export default function Results() {
 
   return (
     <>
-      <Helmet>
-        <title>Toppers & Results | Siddhi's Coaching Classes Chembur</title>
-        <meta name="description" content="See the outstanding results achieved by Siddhi's Coaching Classes students across SSC, HSC Science, HSC Commerce, and Entrance exams in Chembur, Mumbai." />
-      </Helmet>
+      <Seo
+        title="Results & Toppers | Best SSC & HSC Coaching Results in Chembur — Siddhi's Coaching Classes"
+        description="13 of 60 students scored 90%+ in SSC 2024-25, commerce topper at 96.20%, MHT-CET topper at 95.40 percentile. See why parents rate Siddhi's the best coaching class in Chembur."
+        path="/results"
+      />
 
       {/* Hero */}
       <section className="bg-navy pt-32 pb-20 relative overflow-hidden">
