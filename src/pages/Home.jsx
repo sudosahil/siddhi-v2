@@ -252,6 +252,8 @@ export default function Home() {
                 <img
                   src={`/property/${encodeURIComponent(photo.file)}`}
                   alt={photo.label}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-navy/70 to-transparent px-3 py-2">
@@ -286,6 +288,8 @@ export default function Home() {
                   <img
                     src={`/toppers/${t.filename}`}
                     alt={t.name}
+                    loading="lazy"
+                    decoding="async"
                     onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=E8951D&color=fff&size=200`; }}
                     className="w-full h-full object-contain"
                   />
@@ -342,12 +346,14 @@ export default function Home() {
                 className="bg-cream rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:-translate-y-1 hover:shadow-md transition-all duration-200 shrink-0 w-52"
                 style={{ scrollSnapAlign: 'start' }}
               >
-                <div className="w-full bg-gray-100">
+                <div className="w-full aspect-[3/4] bg-gray-100">
                   <img
                     src={t.photo ? `/teachers/${t.photo}` : `https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=1B2A4A&color=fff&size=400`}
                     alt={t.name}
+                    loading="lazy"
+                    decoding="async"
                     onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=1B2A4A&color=fff&size=400`; }}
-                    className="w-full h-auto block"
+                    className="w-full h-full object-cover block"
                   />
                 </div>
                 <div className="p-4 text-center">

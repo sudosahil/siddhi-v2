@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Seo from '../components/Seo';
 import { motion } from 'framer-motion';
-import { MapPin, Phone, Mail, Clock, MessageCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, MessageCircle, Star } from 'lucide-react';
 import SectionHeader from '../components/ui/SectionHeader';
 import { siteInfo } from '../data/siteInfo';
 
@@ -151,6 +151,32 @@ export default function Contact() {
           </div>
         </div>
       </section>
+
+      {/* Google Review CTA — renders only when a review link is configured in
+          siteInfo.googleReviewUrl (set it once the Google Business Profile is claimed). */}
+      {siteInfo.googleReviewUrl && (
+        <section className="py-16 bg-white">
+          <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center">
+            <div className="flex justify-center gap-1 mb-4 text-saffron">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} size={22} className="fill-saffron" />
+              ))}
+            </div>
+            <h2 className="font-heading font-bold text-2xl text-navy mb-3">Happy with Siddhi's Coaching?</h2>
+            <p className="text-gray-600 mb-6">
+              A quick Google review helps other Chembur parents find us — and means a lot to our teachers.
+            </p>
+            <a
+              href={siteInfo.googleReviewUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-saffron text-white font-heading font-semibold px-8 py-3 rounded-full hover:bg-amber-600 transition-colors"
+            >
+              Leave a Google Review
+            </a>
+          </div>
+        </section>
+      )}
     </>
   );
 }

@@ -16,6 +16,7 @@ import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
+import NotFound from './pages/NotFound';
 
 const pageVariants = {
   initial: { opacity: 0, y: 12 },
@@ -60,6 +61,7 @@ export default function App() {
             <Route path="/admin" element={<AnimatedPage><AdminDashboard /></AnimatedPage>} />
             <Route path="/admin/login" element={<AnimatedPage><AdminLogin /></AnimatedPage>} />
             <Route path="/admin/dashboard" element={<AnimatedPage><AdminDashboard /></AnimatedPage>} />
+            <Route path="*" element={<AnimatedPage><NotFound /></AnimatedPage>} />
           </Routes>
         </AnimatePresence>
       </main>

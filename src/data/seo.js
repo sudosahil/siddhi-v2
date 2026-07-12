@@ -41,6 +41,10 @@ export const ORG_SCHEMA = {
     postalCode: '400071',
     addressCountry: 'IN',
   },
+  // Coordinates from the map pin published on the Contact page. Replace with the
+  // exact Google Business Profile pin coordinates once each centre's GBP is claimed.
+  geo: { '@type': 'GeoCoordinates', latitude: 19.0596, longitude: 72.9002 },
+  hasMap: 'https://www.google.com/maps?q=19.0596,72.9002',
   department: [
     {
       '@type': 'LocalBusiness',

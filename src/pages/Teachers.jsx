@@ -1,11 +1,28 @@
 import { useState } from 'react';
 import Seo from '../components/Seo';
+import { SITE_URL } from '../data/seo';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GraduationCap } from 'lucide-react';
 import SectionHeader from '../components/ui/SectionHeader';
 import { teachers } from '../data/teachers';
 
 const filters = ['All', 'Science', 'Commerce', 'Entrance'];
+
+// Per-teacher Person schema — strengthens Expertise/Authoritativeness (E-E-A-T)
+// by tying each named faculty member and credential to the organization.
+const facultySchema = teachers.map(t => ({
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: t.name,
+  jobTitle: `${t.subject} Teacher`,
+  description: t.bio,
+  worksFor: { '@id': `${SITE_URL}/#organization` },
+  hasCredential: {
+    '@type': 'EducationalOccupationalCredential',
+    credentialCategory: t.qualification,
+  },
+  ...(t.photo ? { image: `${SITE_URL}/teachers/${encodeURIComponent(t.photo)}` } : {}),
+}));
 
 export default function Teachers() {
   const [active, setActive] = useState('All');
@@ -22,6 +39,7 @@ export default function Teachers() {
         title="Our Teachers | Best Coaching Faculty in Chembur — PhD, MBBS, CA & IITian | Siddhi's"
         description="Learn from Chembur's best coaching faculty — PhD holders, MBBS doctors from Sion & KEM hospitals, a Chartered Accountant, a Company Secretary and an IITian. Experts for SSC, HSC, NEET, JEE & MH-CET."
         path="/teachers"
+        jsonLd={facultySchema}
       />
 
       {/* Hero */}
@@ -79,6 +97,8 @@ export default function Teachers() {
                     <img
                       src={t.photo ? `/teachers/${t.photo}` : `https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=1B2A4A&color=fff&size=400`}
                       alt={t.name}
+                      loading="lazy"
+                      decoding="async"
                       onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=1B2A4A&color=fff&size=400`; }}
                       style={t.objectPosition ? { objectPosition: t.objectPosition } : undefined}
                       className="w-full h-full object-cover"
@@ -86,13 +106,14 @@ export default function Teachers() {
                   </div>
                   {/* Info */}
                   <div className="p-4">
-                    <h3 className="font-heading font-semibold text-navy text-sm">{t.name}</h3>
+                    <h3 className="font-heading font-semibold text-navy text-base">{t.name}</h3>
                     <p className="text-saffron text-sm font-medium mt-0.5">{t.subject}</p>
-                    <div className="flex items-center justify-center gap-1 mt-2 text-xs text-gray-500">
-                      <GraduationCap size={11} />
+                    <div className="flex items-center justify-center gap-1.5 mt-2 text-sm font-medium text-gray-700">
+                      <GraduationCap size={15} className="text-saffron shrink-0" />
                       <span>{t.qualification}</span>
                     </div>
-                    <span className="inline-block mt-2 text-xs bg-navy/5 text-navy rounded-full px-3 py-1">{t.experience}</span>
+                    <span className="inline-block mt-2 text-sm font-semibold bg-navy/5 text-navy rounded-full px-3 py-1">{t.experience}</span>
+                    {t.bio && <p className="text-gray-500 text-xs mt-3 leading-relaxed">{t.bio}</p>}
                   </div>
                 </motion.div>
               ))}

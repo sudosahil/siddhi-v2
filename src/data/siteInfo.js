@@ -9,6 +9,10 @@ export const siteInfo = {
   whatsappMessage: "Hi, I would like to enquire about admission at Siddhi's Coaching Classes.",
   email: "info@siddhiscoachingclasses.com",
   instagram: "https://www.instagram.com/siddhiscoachingclasses",
+  // Paste the "Write a review" short link from the claimed Google Business Profile
+  // (Business Profile → Ask for reviews → copy link, e.g. https://g.page/r/XXXX/review).
+  // Once set, the review CTA on the Contact page activates automatically.
+  googleReviewUrl: "",
   social_handle: "@siddhiscoachingclasses",
   timings: "Mon–Sat: 6:30 AM – 9:00 PM",
   centres: [

@@ -1,3 +1,6 @@
+// `bio` is a short, credential-grounded description used on the Teachers page
+// and in per-teacher Person schema (E-E-A-T). Keep bios factual — derived only
+// from the qualification/subject on file, no invented history.
 export const teachers = [
   {
     id: 1,
@@ -7,7 +10,8 @@ export const teachers = [
     experience: "10 Years",
     section: "Science",
     photo: "Dr Preeti MK.jpeg",
-    highlight: "PhD in Mathematics with a decade of teaching experience"
+    highlight: "PhD in Mathematics with a decade of teaching experience",
+    bio: "Dr. Preeti holds a PhD in Mathematics and brings over ten years of teaching experience to Siddhi's. She breaks down Algebra, Geometry and Calculus into clear, step-by-step method, helping HSC Science and SSC students build genuine problem-solving confidence.",
   },
   {
     id: 2,
@@ -17,7 +21,8 @@ export const teachers = [
     experience: "MBBS Doctor",
     section: "Science",
     photo: "Dr Karan Anand.jpeg",
-    highlight: "MBBS doctor from Sion Hospital brings real medical insight to NEET coaching"
+    highlight: "MBBS doctor from Sion Hospital brings real medical insight to NEET coaching",
+    bio: "Dr. Karan Anand is an MBBS doctor from Sion Hospital, Mumbai, teaching Biology for NEET. His clinical background lets him connect textbook biology to real medical practice, so students understand concepts the way NEET actually tests them.",
   },
   {
     id: 3,
@@ -27,7 +32,8 @@ export const teachers = [
     experience: "Industry Professional",
     section: "Science",
     photo: "Prof Shanaya Jha Tiwari.jpeg",
-    highlight: "IITian Chemical Engineer — brings rigorous analytical thinking to Commerce"
+    highlight: "IITian Chemical Engineer — brings rigorous analytical thinking to Commerce",
+    bio: "An IIT graduate in Chemical Engineering, Prof. Shanaya brings the rigorous, analytical thinking of an engineer to Commerce teaching. She helps students approach Business Studies with structure and clarity rather than rote learning.",
   },
   {
     id: 4,
@@ -37,7 +43,8 @@ export const teachers = [
     experience: "MBBS Doctor",
     section: "Science",
     photo: "Dr Ankit G.jpeg",
-    highlight: "MBBS doctor from KEM Hospital, Mumbai"
+    highlight: "MBBS doctor from KEM Hospital, Mumbai",
+    bio: "Dr. Ankit is an MBBS doctor from KEM Hospital, Mumbai, coaching Biology for NEET aspirants. Having cleared the medical path himself, he mentors students on both the syllabus and the exam strategy needed to secure a medical seat.",
   },
   {
     id: 5,
@@ -47,7 +54,8 @@ export const teachers = [
     experience: "Medical Professional",
     section: "Science",
     photo: "Dr Sana Mane.jpeg",
-    highlight: "MBBS doctor delivering concept-first Biology coaching"
+    highlight: "MBBS doctor delivering concept-first Biology coaching",
+    bio: "Dr. Sana Mane is an MBBS doctor who delivers concept-first Biology coaching for HSC Science and NEET students. Her medical training keeps lessons grounded in how the human body actually works, making tough topics easier to retain.",
   },
   {
     id: 6,
@@ -57,7 +65,8 @@ export const teachers = [
     experience: "Chartered Accountant",
     section: "Commerce",
     photo: "Yogesh T.jpeg",
-    highlight: "Qualified CA teaching Accounts and CA Foundation with deep professional knowledge"
+    highlight: "Qualified CA teaching Accounts and CA Foundation with deep professional knowledge",
+    bio: "CA Yogesh is a practising Chartered Accountant who teaches Accounts and the full CA Foundation programme. Students learn each paper from a professional who works in the field daily, gaining practical insight beyond the textbook.",
   },
   {
     id: 7,
@@ -68,7 +77,8 @@ export const teachers = [
     section: "Commerce",
     photo: "Prof Harish K.jpeg",
     objectPosition: "center top",
-    highlight: "MBA professional with active industry management experience"
+    highlight: "MBA professional with active industry management experience",
+    bio: "Prof. Harish is an MBA and active industry manager who teaches Business Studies and Organisation of Commerce & Management (OCM). He connects classroom concepts to real business decisions, giving Commerce students context that sticks.",
   },
   {
     id: 8,
@@ -78,7 +88,8 @@ export const teachers = [
     experience: "Company Secretary",
     section: "Commerce",
     photo: "CS Dimple D.jpeg",
-    highlight: "Qualified Company Secretary — unique expertise in Commerce legal subjects"
+    highlight: "Qualified Company Secretary — unique expertise in Commerce legal subjects",
+    bio: "CS Dimple is a qualified Company Secretary with specialist expertise in the legal and compliance side of Commerce. She makes Business Law and OCM approachable, drawing on her professional grounding in corporate governance.",
   },
   {
     id: 9,
@@ -88,7 +99,8 @@ export const teachers = [
     experience: "MBBS Doctor",
     section: "Science",
     photo: "Dr Pranav P.jpeg",
-    highlight: "MBBS doctor from Sion Hospital, Mumbai — brings real clinical insight to NEET coaching"
+    highlight: "MBBS doctor from Sion Hospital, Mumbai — brings real clinical insight to NEET coaching",
+    bio: "Dr. Pranav is an MBBS doctor from Sion Hospital, Mumbai, coaching Biology for NEET. He brings real clinical insight to the classroom, helping aspirants see the reasoning behind the biology that competitive exams reward.",
   },
   {
     id: 11,
@@ -98,6 +110,7 @@ export const teachers = [
     experience: "Finance Professional",
     section: "Commerce",
     photo: "Prof Kishor K.jpeg",
-    highlight: "Masters in Finance — expert guidance for Commerce and finance subjects"
+    highlight: "Masters in Finance — expert guidance for Commerce and finance subjects",
+    bio: "Prof. Kishor holds a Masters in Finance and guides Commerce students through Accountancy, Economics and finance topics. His professional finance background helps students grasp not just the how, but the why behind the numbers.",
   },
 ];
