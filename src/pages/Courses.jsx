@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Seo from '../components/Seo';
 import { SITE_URL } from '../data/seo';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Clock, Users, BookOpen, MessageCircle } from 'lucide-react';
+import { Clock, Users, BookOpen, MessageCircle } from 'lucide-react';
 import SectionHeader from '../components/ui/SectionHeader';
 import { courses } from '../data/courses';
 
@@ -16,7 +17,6 @@ function enquireWA(courseName) {
 
 export default function Courses() {
   const [active, setActive] = useState('All');
-  const [selected, setSelected] = useState(null);
 
   const filtered = courses.filter(c => active === 'All' || c.section === active);
 
@@ -129,12 +129,12 @@ export default function Courses() {
                     </div>
 
                     <div className="flex gap-3">
-                      <button
-                        onClick={() => setSelected(c)}
-                        className="flex-1 border-2 border-navy text-navy font-semibold text-sm py-2 rounded-xl hover:bg-navy hover:text-white transition-all"
+                      <Link
+                        to={`/courses/${c.slug}`}
+                        className="flex-1 border-2 border-navy text-navy font-semibold text-sm py-2 rounded-xl hover:bg-navy hover:text-white transition-all flex items-center justify-center"
                       >
                         View Details
-                      </button>
+                      </Link>
                       <button
                         onClick={() => enquireWA(c.title)}
                         className="flex-1 bg-[#25D366] text-white font-semibold text-sm py-2 rounded-xl flex items-center justify-center gap-1 hover:bg-green-600 transition-colors"
@@ -149,74 +149,6 @@ export default function Courses() {
           </motion.div>
         </div>
       </section>
-
-      {/* Modal */}
-      <AnimatePresence>
-        {selected && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSelected(null)}
-          >
-            <motion.div
-              className="bg-white rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl"
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
-              onClick={e => e.stopPropagation()}
-            >
-              <div className="h-2 rounded-t-2xl bg-navy" />
-              <div className="p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <h2 className="font-heading font-bold text-navy text-2xl">{selected.title}</h2>
-                    <p className="text-saffron font-medium">Classes {selected.classes} | {selected.board}</p>
-                  </div>
-                  <button onClick={() => setSelected(null)} className="p-2 hover:bg-gray-100 rounded-lg">
-                    <X size={20} />
-                  </button>
-                </div>
-
-                <div className="mb-5">
-                  <h4 className="font-heading font-semibold text-navy mb-2">Subjects Covered</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {selected.subjects.map(s => (
-                      <span key={s} className="text-sm bg-navy/5 text-navy rounded-lg px-3 py-1">{s}</span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3 bg-saffron/10 rounded-xl px-4 py-3 mb-5">
-                  <BookOpen size={16} className="text-saffron shrink-0" />
-                  <span className="text-sm font-semibold text-navy">{selected.highlight}</span>
-                </div>
-
-                <div className="space-y-2 mb-5">
-                  <div className="flex items-center gap-2 text-gray-600 text-sm">
-                    <Clock size={14} className="text-saffron" />
-                    {selected.batchType}
-                  </div>
-                  <div className="flex items-center gap-2 text-gray-600 text-sm">
-                    <Users size={14} className="text-saffron" />
-                    Max 20 students per batch
-                  </div>
-                </div>
-
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => { enquireWA(selected.title); setSelected(null); }}
-                    className="flex-1 bg-[#25D366] text-white font-semibold py-3 rounded-xl flex items-center justify-center gap-2 hover:bg-green-600 transition-colors"
-                  >
-                    <MessageCircle size={16} /> Enquire on WhatsApp
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </>
   );
 }

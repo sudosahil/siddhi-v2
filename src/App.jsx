@@ -6,6 +6,7 @@ import WhatsAppButton from './components/ui/WhatsAppButton';
 import ScrollToTop from './components/ui/ScrollToTop';
 import Home from './pages/Home';
 import Courses from './pages/Courses';
+import CourseDetail from './pages/CourseDetail';
 import Results from './pages/Results';
 import Teachers from './pages/Teachers';
 import About from './pages/About';
@@ -48,6 +49,7 @@ export default function App() {
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<AnimatedPage><Home /></AnimatedPage>} />
             <Route path="/courses" element={<AnimatedPage><Courses /></AnimatedPage>} />
+            <Route path="/courses/:slug" element={<AnimatedPage><CourseDetail /></AnimatedPage>} />
             <Route path="/results" element={<AnimatedPage><Results /></AnimatedPage>} />
             <Route path="/teachers" element={<AnimatedPage><Teachers /></AnimatedPage>} />
             <Route path="/about" element={<AnimatedPage><About /></AnimatedPage>} />

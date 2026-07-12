@@ -14,6 +14,11 @@ const SSR_DIR = path.join(ROOT, 'dist-ssr');
 const routes = [
   '/',
   '/courses',
+  '/courses/ssc-coaching-chembur',
+  '/courses/hsc-science-coaching-chembur',
+  '/courses/neet-jee-cet-coaching-chembur',
+  '/courses/hsc-commerce-coaching-chembur',
+  '/courses/ca-foundation-coaching-chembur',
   '/results',
   '/teachers',
   '/about',
