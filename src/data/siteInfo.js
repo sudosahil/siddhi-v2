@@ -7,7 +7,7 @@ export const siteInfo = {
   phoneDisplay: "9594345743 / 7208476547",
   whatsapp: "917208476547",
   whatsappMessage: "Hi, I would like to enquire about admission at Siddhi's Coaching Classes.",
-  email: "info@siddhiscoachingclasses.in",
+  email: "info@siddhiscoachingclasses.com",
   instagram: "https://www.instagram.com/siddhiscoachingclasses",
   social_handle: "@siddhiscoachingclasses",
   timings: "Mon–Sat: 6:30 AM – 9:00 PM",
